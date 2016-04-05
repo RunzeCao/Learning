@@ -19,15 +19,19 @@ import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
 import com.example.myapplication.db.DBHelper;
+import com.example.myapplication.weather.Today;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.io.UnsupportedEncodingException;
 
 public class BaiduActivity extends AppCompatActivity {
 
     public LocationClient locationClient;
     public BDLocationListener myLocationListener;
-    private TextView baiduLocarion, weather;
+    private TextView baiduLocarion,weather;
+
     private Button ifStart;
     private String city, province, postID;
     String url;
@@ -35,13 +39,12 @@ public class BaiduActivity extends AppCompatActivity {
     DBHelper dbHelper;
     RequestQueue requestQueue;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_baidu);
         baiduLocarion = (TextView) findViewById(R.id.baiduLocation);
-        ifStart = (Button) findViewById(R.id.ifStart);
+
         weather = (TextView) findViewById(R.id.weather);
         dbHelper = new DBHelper(BaiduActivity.this);
         requestQueue = Volley.newRequestQueue(this);
@@ -51,11 +54,11 @@ public class BaiduActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-
         locationClient = new LocationClient(getApplicationContext());
         initLocation();
         myLocationListener = new MyLocationListener();
         locationClient.registerLocationListener(myLocationListener);
+        ifStart = (Button) findViewById(R.id.ifStart);
         ifStart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -120,18 +123,29 @@ public class BaiduActivity extends AppCompatActivity {
             baiduLocarion.setText("province:" + province + " city:" + city + " postID:" + postID);
             url = String.format(WEATHER_ALL, new Object[]{postID});
             url += getDeviceInfo(BaiduActivity.this);
+            locationClient.stop();
             Log.d("URL",url);
             JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(url, null, new Response.Listener<JSONObject>() {
                 @Override
                 public void onResponse(JSONObject jsonObject) {
-
+                    if(jsonObject == null){
+                        Log.d("BaiduActivity","00000");
+                    }else {
+                        Log.d("BaiduActivity","00001");
+                    }
+                    String forecast =jsonObject.optString("forecast");
+                    byte[] bytes = new byte[0];
                     try {
-                        JSONObject j = (JSONObject) jsonObject.get("forecast");
-                        ToastUtil.makeText(BaiduActivity.this,j.toString());
-                    } catch (JSONException e) {
+                        bytes = forecast.getBytes("iso8859-1");
+                    } catch (UnsupportedEncodingException e) {
                         e.printStackTrace();
                     }
-
+                    try {
+                        Log.d("BaiduActivity", new String(bytes,"UTF-8"));
+                    } catch (UnsupportedEncodingException e) {
+                        e.printStackTrace();
+                    }
+//                    Log.d("BaiduActivity",jsonObject.toString().replace("forecast","weatherinfo"));
                 }
             }, new Response.ErrorListener() {
                 @Override
