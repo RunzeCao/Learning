@@ -1,6 +1,7 @@
 package com.example.myapplication;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.telephony.TelephonyManager;
@@ -30,12 +31,13 @@ public class BaiduActivity extends AppCompatActivity {
     public BDLocationListener myLocationListener;
     private TextView baiduLocarion, weather;
 
-    private Button ifStart;
+    private Button ifStart,next;
     private String city, province, postID;
     String url;
     private static final String WEATHER_ALL = "http://weatherapi.market.xiaomi.com/wtr-v2/weather?cityId=%s";
     DBHelper dbHelper;
     RequestQueue requestQueue;
+    Today today;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +46,7 @@ public class BaiduActivity extends AppCompatActivity {
         baiduLocarion = (TextView) findViewById(R.id.baiduLocation);
 
         weather = (TextView) findViewById(R.id.weather);
+        next = (Button) findViewById(R.id.next);
         dbHelper = new DBHelper(BaiduActivity.this);
         requestQueue = Volley.newRequestQueue(this);
     }
@@ -64,6 +67,15 @@ public class BaiduActivity extends AppCompatActivity {
                     return;
                 locationClient.start();
                 locationClient.requestLocation();
+            }
+        });
+
+        next.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(BaiduActivity.this,DisplayActivity.class);
+                intent.putExtra("today",today);
+                startActivity(intent);
             }
         });
     }
@@ -124,7 +136,7 @@ public class BaiduActivity extends AppCompatActivity {
                     try {
                         JSONObject jsonObject = new JSONObject(response);
                         JSONObject todayJsonObject = jsonObject.getJSONObject("today");
-                        Today today = new Today();
+                         today = new Today();
 
                         today.setDate(todayJsonObject.getString("date"));
                         today.setHumidityMax(todayJsonObject.getInt("humidityMax"));

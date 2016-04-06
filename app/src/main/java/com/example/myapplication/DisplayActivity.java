@@ -7,6 +7,8 @@ import android.util.Log;
 import android.view.Display;
 import android.widget.TextView;
 
+import com.example.myapplication.weather.Today;
+
 public class DisplayActivity extends AppCompatActivity {
 
     private TextView display,display2;
@@ -21,7 +23,8 @@ public class DisplayActivity extends AppCompatActivity {
         display.setText(displayMetrics.toString());
         float width=displayMetrics.widthPixels*displayMetrics.density;
         float height=displayMetrics.heightPixels*displayMetrics.density;
-        display2.setText("width:"+width+"height:"+height);
+        Today today = getIntent().getParcelableExtra("today");
+        display2.setText(today.toString());
 
     }
 }
