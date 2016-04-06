@@ -13,12 +13,14 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
 import com.example.myapplication.db.DBHelper;
+import com.example.myapplication.weather.MyStringRequest;
 import com.example.myapplication.weather.Today;
 
 import org.json.JSONException;
@@ -28,9 +30,10 @@ import java.io.UnsupportedEncodingException;
 
 public class BaiduActivity extends AppCompatActivity {
 
+    private static final String TAG = BaiduActivity.class.getSimpleName();
     public LocationClient locationClient;
     public BDLocationListener myLocationListener;
-    private TextView baiduLocarion,weather;
+    private TextView baiduLocarion, weather;
 
     private Button ifStart;
     private String city, province, postID;
@@ -64,15 +67,8 @@ public class BaiduActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if (locationClient == null)
                     return;
-                if (locationClient.isStarted()) {
-                    locationClient.stop();
-                    ifStart.setText("start");
-                } else {
-                    locationClient.start();
-                    locationClient.requestLocation();
-                    ifStart.setText("stop");
-                }
-
+                locationClient.start();
+                locationClient.requestLocation();
             }
         });
     }
@@ -124,8 +120,43 @@ public class BaiduActivity extends AppCompatActivity {
             url = String.format(WEATHER_ALL, new Object[]{postID});
             url += getDeviceInfo(BaiduActivity.this);
             locationClient.stop();
-            Log.d("URL",url);
-            JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(url, null, new Response.Listener<JSONObject>() {
+            Log.d("URL", url);
+            MyStringRequest stringRequest = new MyStringRequest(url, new Response.Listener<String>() {
+
+                @Override
+                public void onResponse(String response) {
+                    Log.d(TAG, "response: " + response.replace("forecast", "weatherinfo"));
+                    try {
+                        JSONObject jsonObject = new JSONObject(response);
+                        JSONObject todayJsonObject = jsonObject.getJSONObject("today");
+                        Today today = new Today();
+
+                        today.setDate(todayJsonObject.getString("date"));
+                        today.setHumidityMax(todayJsonObject.getInt("humidityMax"));
+                        today.setHumidityMin(todayJsonObject.getInt("humidityMin"));
+                        today.setWindDirectionEnd(todayJsonObject.getString("windDirectionEnd"));
+                        today.setWindDirectionStart(todayJsonObject.getString("windDirectionStart"));
+                        today.setWindMax(todayJsonObject.getInt("windMax"));
+                        today.setWindMin(todayJsonObject.getInt("windMin"));
+                        today.setWeatherEnd(todayJsonObject.getString("weatherEnd"));
+                        today.setWeatherStart(todayJsonObject.getString("weatherStart"));
+                        today.setTempMax(todayJsonObject.getInt("tempMax"));
+                        today.setWindMin(todayJsonObject.getInt("tempMin"));
+
+                        weather.setText(today.toString());
+                        Log.d(TAG, today.toString());
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Log.e(TAG, error.toString());
+                }
+            });
+            requestQueue.add(stringRequest);
+       /*     JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(url, null, new Response.Listener<JSONObject>() {
                 @Override
                 public void onResponse(JSONObject jsonObject) {
                     if(jsonObject == null){
@@ -152,8 +183,8 @@ public class BaiduActivity extends AppCompatActivity {
                 public void onErrorResponse(VolleyError volleyError) {
                     Log.e("TAG", volleyError.getMessage(), volleyError);
                 }
-            });
-            requestQueue.add(jsonObjectRequest);
+            });*/
+
 
        /*     StringBuilder sb = new StringBuilder();
             sb.append("time : ");
