@@ -1,4 +1,4 @@
-package com.example.myapplication.weather;
+package com.example.myapplication;
 
 import com.android.volley.NetworkResponse;
 import com.android.volley.Response;
