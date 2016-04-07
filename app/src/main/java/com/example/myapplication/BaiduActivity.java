@@ -136,7 +136,7 @@ public class BaiduActivity extends AppCompatActivity {
                     try {
                         JSONObject jsonObject = new JSONObject(response);
                         JSONObject todayJsonObject = jsonObject.getJSONObject("today");
-                         today = new Today();
+                        today = new Today();
 
                         today.setDate(todayJsonObject.getString("date"));
                         today.setHumidityMax(todayJsonObject.getInt("humidityMax"));

@@ -11,6 +11,7 @@
     <!-- 获取运营商信息，用于支持提供运营商信息相关的接口 -->
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <!-- 这个权限用于获取wifi的获取权限，wifi信息会用来进行网络定位 -->
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
     <!-- 用于读取手机当前的状态 -->
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
@@ -20,6 +21,8 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <!-- SD卡读取权限，用户写入离线定位数据 -->
     <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
 
     <application
         android:icon="@mipmap/ic_launcher"
@@ -28,27 +31,30 @@
         android:theme="@style/AppTheme">
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
-            android:value="NWalNP9rRyjEwjDDHlzTkVsqE3OQQQEQ"
-            />
-        <activity android:name=".MainActivity">
+            android:value="NWalNP9rRyjEwjDDHlzTkVsqE3OQQQEQ" />
 
-        </activity>
+        <activity android:name=".MainActivity" />
 
         <service
             android:name="com.baidu.location.f"
             android:enabled="true"
             android:process=":remote" />
 
-        <activity android:name=".BaiduActivity">
+        <activity android:name=".BaiduActivity" />
+        <activity android:name=".DisplayActivity" />
+        <activity android:name=".BleScanActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".DisplayActivity">
+        <activity android:name=".DeviceControlActivity" />
 
-        </activity>
+        <service
+            android:name=".BleService"
+            android:enabled="true"
+            android:exported="true"></service>
     </application>
 
 </manifest>
