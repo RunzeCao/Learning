@@ -35,10 +35,10 @@
 
         <activity android:name=".MainActivity" />
 
-        <service
+     <!--   <service
             android:name="com.baidu.location.f"
             android:enabled="true"
-            android:process=":remote" />
+            android:process=":remote" /> -->
 
         <activity android:name=".BaiduActivity" />
         <activity android:name=".DisplayActivity" />
@@ -52,9 +52,7 @@
         <activity android:name=".DeviceControlActivity" />
 
         <service
-            android:name=".BleService"
-            android:enabled="true"
-            android:exported="true"></service>
+            android:name=".BleService" />
     </application>
 
 </manifest>
