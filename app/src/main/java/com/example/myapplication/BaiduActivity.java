@@ -13,13 +13,17 @@ import android.widget.TextView;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
 import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
 import com.example.myapplication.db.DBHelper;
+import com.example.myapplication.util.ToastUtil;
 import com.example.myapplication.weather.Today;
+import com.example.myapplication.weather.TodayGson;
+import com.google.gson.Gson;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -38,6 +42,7 @@ public class BaiduActivity extends AppCompatActivity {
     DBHelper dbHelper;
     RequestQueue requestQueue;
     Today today;
+    TodayGson todayGson;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -136,7 +141,7 @@ public class BaiduActivity extends AppCompatActivity {
                     try {
                         JSONObject jsonObject = new JSONObject(response);
                         JSONObject todayJsonObject = jsonObject.getJSONObject("today");
-                        today = new Today();
+               /*         today = new Today();
 
                         today.setDate(todayJsonObject.getString("date"));
                         today.setHumidityMax(todayJsonObject.getInt("humidityMax"));
@@ -150,8 +155,11 @@ public class BaiduActivity extends AppCompatActivity {
                         today.setTempMax(todayJsonObject.getInt("tempMax"));
                         today.setWindMin(todayJsonObject.getInt("tempMin"));
 
-                        weather.setText(today.toString());
-                        Log.d(TAG, today.toString());
+                        weather.setText(today.toString());*/
+                        Gson gson = new Gson();
+                        todayGson = gson.fromJson(todayJsonObject.toString(),TodayGson.class);
+                       // Log.d(TAG, todayGson.getDate().toString());
+                        ToastUtil.makeText(BaiduActivity.this,todayGson.toString());
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -162,6 +170,7 @@ public class BaiduActivity extends AppCompatActivity {
                     Log.e(TAG, error.toString());
                 }
             });
+
             requestQueue.add(stringRequest);
        /*     JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(url, null, new Response.Listener<JSONObject>() {
                 @Override

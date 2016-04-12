@@ -3,4 +3,23 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+
+    <!-- 白色-->
+    <color name="colorWhite">#ffffffff</color>
+    <!-- 黑色-->
+    <color name="colorBlack">#ff000000</color>
+    <!-- 登录界面 -->
+    <color name="login_gray_txt_color">#b3b3b3</color>
+    <!-- 验证码按钮常态颜色 -->
+    <color name="get_verification_btn_n_color">#fe2d42</color>
+    <!-- 验证码按钮点击颜色 -->
+    <color name="get_verification_btn_p_color">#942933</color>
+    <!-- 绑定首页头部分割线颜色-->
+    <color name="main_head_spit_color">#9A9A9A</color>
+    <!-- Dialog字体颜色-->
+    <color name="dialog_line_color">#ffb13640</color>
+    <color name="dialog_text_color">#ffb13640</color>
+    <color name="dialog_bottom_devider">#ffcacaca</color>
+    <!-- Avatar -->
+    <color name="base_txt_textColor">#ff575454</color>
 </resources>

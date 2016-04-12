@@ -4,4 +4,20 @@
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="three_grid_unit">24dp</dimen>
     <dimen name="one_and_a_half_grid_unit">12dp</dimen>
+
+    <!--  登录界面  -->
+    <dimen name="login_height">40dp</dimen>
+    <dimen name="login_margin_10">10dp</dimen>
+    <dimen name="login_margin_20">20dp</dimen>
+    <dimen name="login_margin_30">30dp</dimen>
+    <dimen name="login_padding_5">5dp</dimen>
+    <dimen name="login_padding_10">10dp</dimen>
+    <dimen name="login_padding_20">20dp</dimen>
+    <dimen name="login_padding_30">30dp</dimen>
+    <dimen name="login_edit_txt_v">20sp</dimen>
+    <dimen name="login_edit_txt_l">16sp</dimen>
+    <dimen name="login_edit_txt_m">14sp</dimen>
+    <dimen name="login_edit_txt_s">12sp</dimen>
+    <dimen name="main_head_height">45dip</dimen>
+    <dimen name="head_divider_height">0.5dp</dimen>
 </resources>

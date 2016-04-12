@@ -33,25 +33,26 @@
             android:name="com.baidu.lbsapi.API_KEY"
             android:value="NWalNP9rRyjEwjDDHlzTkVsqE3OQQQEQ" />
 
+        <activity android:name=".LoginActivity">
+
+        </activity>
         <activity android:name=".MainActivity" />
-        <activity android:name=".BaiduActivity" />
-        <activity android:name=".DisplayActivity" />
-        <activity android:name=".ble.BleScanActivity" />
-        <activity android:name=".DeviceControlActivity" />
-        <activity android:name=".DateActivity">
+        <activity android:name=".BaiduActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
+        <activity android:name=".DisplayActivity" />
+        <activity android:name=".ble.BleScanActivity" />
+        <activity android:name=".DeviceControlActivity" />
+        <activity android:name=".DateActivity" />
 
         <service
             android:name="com.baidu.location.f"
             android:enabled="true"
             android:process=":remote" />
-
         <service android:name=".ble.BleService" />
         <service
             android:name=".NotificationMonitor"
@@ -60,6 +61,7 @@
                 <action android:name="android.service.notification.NotificationListenerService" />
             </intent-filter>
         </service>
+
     </application>
 
 </manifest>
