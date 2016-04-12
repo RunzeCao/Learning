@@ -59,7 +59,7 @@ public class BleService extends Service {
 }
 */
 
-package com.example.myapplication;
+package com.example.myapplication.ble;
 
 import android.app.Service;
 import android.bluetooth.BluetoothAdapter;
@@ -69,8 +69,6 @@ import android.content.Intent;
 import android.os.Binder;
 import android.os.IBinder;
 import android.text.TextUtils;
-
-import com.example.myapplication.BleCallback;
 
 
 public class BleService extends Service {

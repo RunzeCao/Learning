@@ -1,4 +1,4 @@
-package com.example.myapplication;
+package com.example.myapplication.ble;
 
 import android.bluetooth.BluetoothGatt;
 import android.bluetooth.BluetoothGattCallback;
@@ -6,6 +6,8 @@ import android.bluetooth.BluetoothGattCharacteristic;
 import android.bluetooth.BluetoothGattDescriptor;
 import android.bluetooth.BluetoothProfile;
 import android.content.Context;
+
+import com.example.myapplication.util.LogUtils;
 
 /**
  * Created by 123 on 2016/4/7.

@@ -8,8 +8,9 @@ import android.content.ServiceConnection;
 import android.os.IBinder;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.util.Log;
+
+import com.example.myapplication.ble.BleService;
 
 import java.util.List;
 

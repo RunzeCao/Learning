@@ -34,25 +34,32 @@
             android:value="NWalNP9rRyjEwjDDHlzTkVsqE3OQQQEQ" />
 
         <activity android:name=".MainActivity" />
-
-     <!--   <service
-            android:name="com.baidu.location.f"
-            android:enabled="true"
-            android:process=":remote" /> -->
-
         <activity android:name=".BaiduActivity" />
         <activity android:name=".DisplayActivity" />
-        <activity android:name=".BleScanActivity">
+        <activity android:name=".ble.BleScanActivity" />
+        <activity android:name=".DeviceControlActivity" />
+        <activity android:name=".DateActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".DeviceControlActivity" />
+
 
         <service
-            android:name=".BleService" />
+            android:name="com.baidu.location.f"
+            android:enabled="true"
+            android:process=":remote" />
+
+        <service android:name=".ble.BleService" />
+        <service
+            android:name=".NotificationMonitor"
+            android:permission="android.permission.BIND_NOTIFICATION_LISTENER_SERVICE">
+            <intent-filter>
+                <action android:name="android.service.notification.NotificationListenerService" />
+            </intent-filter>
+        </service>
     </application>
 
 </manifest>
