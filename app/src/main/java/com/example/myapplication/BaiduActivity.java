@@ -13,14 +13,13 @@ import android.widget.TextView;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
 import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
 import com.example.myapplication.db.DBHelper;
-import com.example.myapplication.util.ToastUtil;
+import com.example.myapplication.utils.ToastUtils;
 import com.example.myapplication.weather.Today;
 import com.example.myapplication.weather.TodayGson;
 import com.google.gson.Gson;
@@ -159,7 +158,7 @@ public class BaiduActivity extends AppCompatActivity {
                         Gson gson = new Gson();
                         todayGson = gson.fromJson(todayJsonObject.toString(),TodayGson.class);
                        // Log.d(TAG, todayGson.getDate().toString());
-                        ToastUtil.makeText(BaiduActivity.this,todayGson.toString());
+                        ToastUtils.makeText(BaiduActivity.this,todayGson.toString());
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }

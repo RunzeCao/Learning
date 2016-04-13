@@ -18,7 +18,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.TextView;
 
-import com.example.myapplication.util.ToastUtil;
+import com.example.myapplication.utils.ToastUtils;
 
 import java.util.Iterator;
 
@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
         altitude = (TextView) findViewById(R.id.altitude);
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-            ToastUtil.makeText(this, "请开启GPS导航...");
+            ToastUtils.makeText(this, "请开启GPS导航...");
             Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
             startActivityForResult(intent, 0);
             return;

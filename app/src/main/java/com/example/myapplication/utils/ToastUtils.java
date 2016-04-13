@@ -1,4 +1,4 @@
-package com.example.myapplication.util;
+package com.example.myapplication.utils;
 
 import android.content.Context;
 import android.widget.Toast;
@@ -6,11 +6,11 @@ import android.widget.Toast;
 import java.util.HashMap;
 
 /**
- * @ClassName: ToastUtil
+ * @ClassName: ToastUtils
  * @Description:
  * @date 2013年12月27日 上午11:56:54
  */
-public class ToastUtil {
+public class ToastUtils {
 
     private static HashMap<Object, Long> map = new HashMap<Object, Long>();
 

@@ -7,7 +7,7 @@ import android.bluetooth.BluetoothGattDescriptor;
 import android.bluetooth.BluetoothProfile;
 import android.content.Context;
 
-import com.example.myapplication.util.LogUtils;
+import com.example.myapplication.utils.LogUtils;
 
 /**
  * Created by 123 on 2016/4/7.
