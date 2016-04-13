@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.example.myapplication.RegisterActivity">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <ImageView
+            android:id="@+id/login_logo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:src="@mipmap/ic_launcher" />
+
+        <TextView
+            android:id="@+id/login_appname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/login_logo"
+            android:layout_centerHorizontal="true"
+            android:paddingTop="10dip"
+            android:text="@string/app_name"
+            android:textSize="16sp" />
+    </RelativeLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="3"
+        android:orientation="vertical">
+
+        <EditText
+            android:id="@+id/register_user"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/login_height"
+            android:layout_marginTop="@dimen/login_margin_10"
+            android:background="@drawable/login_white_rect_border"
+            android:hint="@string/login_input_user"
+            android:paddingLeft="@dimen/login_padding_10"
+            android:textColorHint="@color/login_gray_txt_color"
+            android:textSize="@dimen/login_edit_txt_m" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/login_margin_10"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/register_verification"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/login_height"
+                android:layout_weight="2"
+                android:background="@drawable/login_white_rect_border"
+                android:hint="@string/login_verification"
+                android:inputType="number"
+                android:paddingLeft="@dimen/login_padding_10"
+                android:textColorHint="@color/login_gray_txt_color"
+                android:textSize="@dimen/login_edit_txt_m" />
+
+            <TextView
+                android:id="@+id/register_get_verification"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1.2"
+                android:background="@drawable/login_white_rect_border"
+                android:gravity="center"
+                android:text="@string/login_get_verification"
+                android:textSize="@dimen/login_edit_txt_m" />
+        </LinearLayout>
+
+        <EditText
+            android:id="@+id/register_pwd"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/login_height"
+            android:layout_marginTop="@dimen/login_margin_10"
+            android:background="@drawable/login_white_rect_border"
+            android:hint="@string/login_input_pwd"
+            android:inputType="textPassword"
+            android:paddingLeft="@dimen/login_padding_10"
+            android:textColorHint="@color/login_gray_txt_color"
+            android:textSize="@dimen/login_edit_txt_s" />
+
+        <TextView
+            android:id="@+id/register_protocol"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="@dimen/login_margin_20"
+            android:text="@string/login_protocol" />
+
+        <TextView
+            android:id="@+id/register_ok"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:background="@drawable/login_white_rect_border"
+            android:paddingBottom="@dimen/login_padding_10"
+            android:paddingLeft="@dimen/login_padding_30"
+            android:paddingRight="@dimen/login_padding_30"
+            android:paddingTop="@dimen/login_padding_10"
+            android:text="@string/register"
+            android:textSize="@dimen/login_edit_txt_m" />
+
+        <TextView
+            android:id="@+id/register_login"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/login_margin_20"
+            android:text="@string/or_login"
+            android:textSize="@dimen/login_edit_txt_s" />
+    </LinearLayout>
+</LinearLayout>

@@ -3,16 +3,33 @@ package com.example.myapplication;
 import android.app.Activity;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
+import com.example.myapplication.mine.Constant;
+import com.example.myapplication.mine.UserBean;
 import com.example.myapplication.mine.UserConstant;
+import com.example.myapplication.utils.LogUtils;
 import com.example.myapplication.utils.NetUtils;
+import com.example.myapplication.utils.PreferenceUitl;
 import com.example.myapplication.utils.StringUtils;
 import com.example.myapplication.utils.ToastUtils;
+import com.example.myapplication.volley.ApiParams;
 
-public class LoginActivity extends Activity implements View.OnClickListener {
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+
+import java.util.Map;
+
+public class LoginActivity extends BaseActivity implements View.OnClickListener {
     private static final String TAG = LoginActivity.class.getSimpleName();
     private EditText login_user;
     private EditText login_pwd;
@@ -37,6 +54,8 @@ public class LoginActivity extends Activity implements View.OnClickListener {
         login_forget_pwd.setOnClickListener(this);
         login_register = (TextView) this.findViewById(R.id.login_register);
         login_register.setOnClickListener(this);
+        login_user.setText("15515685021");
+        login_pwd.setText("123456");
     }
 
     @Override
@@ -46,8 +65,10 @@ public class LoginActivity extends Activity implements View.OnClickListener {
                 attemptLogin();
                 break;
             case R.id.login_forget_pwd:
+                goAction(ResetPwdActivity.class, false);
                 break;
             case R.id.login_register:
+                goAction(RegisterActivity.class, true);
                 break;
             default:
                 break;
@@ -95,11 +116,47 @@ public class LoginActivity extends Activity implements View.OnClickListener {
             ToastUtils.makeText(this, this.getString(R.string.input_register_pwd_length));
             return;
         }
-        requestLogin(input_login_account,input_login_pwd);
+
+        requestLogin(input_login_account, input_login_pwd);
     }
 
-    private void requestLogin(String input_login_account, String input_login_pwd) {
+    private void requestLogin(final String input_login_account, final String input_login_pwd) {
+        executeRequest(new StringRequest(Request.Method.POST, Constant.REQUEST_URL + Constant.LOGIN, requestListener(), errorListener()) {
+            public Map<String, String> getParams() {
+                return new ApiParams().with("Account", input_login_account).with("Password", input_login_pwd);
+            }
+        });
+    }
 
+    private Response.Listener<String> requestListener() {
+        return new Response.Listener<String>() {
+            @Override
+            public void onResponse(String s) {
+                try {
+                    JSONObject jsonObject = new JSONObject(s);
+                    LogUtils.d(jsonObject.get("result").toString());
+                    if ("ok".equalsIgnoreCase(jsonObject.optString("result"))) {
+                        String message = jsonObject.optString("message");
+                        JSONArray jsonArray = jsonObject.getJSONArray("data");
+                        JSONObject object = jsonArray.getJSONObject(0);
+                        UserBean userBean = new UserBean(object);
+                        UserConstant.savaUserInfo(mContext, userBean);
+                        ToastUtils.makeText(mContext, message);
+                        boolean hasInfo = PreferenceUitl.getInstance(mContext).getBoolean(Constant.PRF_COMPELED_USERINFO, false);
+                        if (!hasInfo) {
+                            goAction(PersionalInfoActivity1.class, true);
+                        } else {
+                            goAction(MainActivity.class, true);
+                        }
+                    } else {
+                        ToastUtils.makeText(mContext, mRes.getString(R.string.login_fail));
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    ToastUtils.makeText(mContext, mRes.getString(R.string.login_fail));
+                }
+            }
+        };
     }
 
 
