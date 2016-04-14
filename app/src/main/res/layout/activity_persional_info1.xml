@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        tools:context=".PersionalInfoActivity1">
+
+        <LinearLayout
+            style="@style/ListBackgroundRightAngleNoFullStyle"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/login_margin_30"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="@dimen/login_padding_10">
+
+            <TextView
+                style="@style/BaseTextStyle"
+                android:layout_width="0dip"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/login_margin_10"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:text="@string/info_name" />
+
+            <EditText
+                android:id="@+id/info1_name"
+                android:layout_width="0dip"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:background="@null"
+                android:drawablePadding="@dimen/login_padding_10"
+                android:drawableRight="@mipmap/ic_arrow_left"
+                android:gravity="right|center"
+                android:singleLine="true"
+                android:textSize="@dimen/login_edit_txt_l" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/info1__birthday_llt"
+            style="@style/ListBackgroundRightAngleNoFullStyle"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/login_margin_30"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="@dimen/login_padding_10">
+
+            <TextView
+                style="@style/BaseTextStyle"
+                android:layout_width="0dip"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/login_margin_10"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:text="@string/select_birthday" />
+
+            <TextView
+                android:id="@+id/info1_birthday"
+                style="@style/BaseTextStyle"
+                android:layout_width="0.0dip"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:drawablePadding="@dimen/login_padding_10"
+                android:drawableRight="@mipmap/ic_arrow_left"
+                android:gravity="right|center" />
+        </LinearLayout>
+
+        <RelativeLayout
+            style="@style/ListBackgroundRightAngleNoFullStyle"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/login_margin_30"
+            android:clickable="true"
+            android:padding="@dimen/login_padding_10">
+
+            <TextView
+                style="@style/BaseTextStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/login_margin_10"
+                android:gravity="center_vertical"
+                android:text="@string/info_gender" />
+
+            <RadioGroup
+                android:id="@+id/info1_gender"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/info1_male"
+                    style="@style/RadioButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/gender_male" />
+
+                <RadioButton
+                    android:id="@+id/info1_female"
+                    style="@style/RadioButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/gender_femal" />
+            </RadioGroup>
+        </RelativeLayout>
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/info1_continue"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/info1_have_account"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="@dimen/login_margin_30"
+        android:layout_marginLeft="@dimen/login_padding_30"
+        android:layout_marginRight="@dimen/login_padding_30"
+        android:background="@drawable/persional_info_corner_border"
+        android:text="@string/info_continue" />
+
+    <Button
+        android:id="@+id/info1_have_account"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/login_white_rect_border"
+        android:text="@string/have_account" />
+</RelativeLayout>

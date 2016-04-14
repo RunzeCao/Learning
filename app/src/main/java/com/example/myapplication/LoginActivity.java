@@ -56,7 +56,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         login_forget_pwd.setOnClickListener(this);
         login_register = (TextView) this.findViewById(R.id.login_register);
         login_register.setOnClickListener(this);
-        login_user.setText("15515685021");
+        login_user.setText("15116404484");
         login_pwd.setText("123456");
     }
 

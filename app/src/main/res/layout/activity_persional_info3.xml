@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/info3_spf_iv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@mipmap/ic_launcher" />
+
+    <Button
+        android:id="@+id/info3_continue"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/info3_have_account"
+        android:layout_margin="@dimen/login_margin_30"
+        android:background="@drawable/persional_info_corner_border"
+        android:text="@string/info_continue" />
+
+    <Button
+        android:id="@+id/info3_have_account"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/login_white_rect_border"
+        android:text="@string/have_account" />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/info3_spf_iv"
+        android:layout_marginTop="250dip"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            android:layout_marginLeft="@dimen/login_margin_20"
+            android:layout_weight="2"
+            android:paddingTop="@dimen/login_padding_5"
+            android:text="@string/sunscreen_recent"
+            android:textSize="16sp" />
+
+        <com.qijiu.smart.widget.spinner.NiceSpinner
+            android:id="@+id/info3_spf"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/login_margin_20"
+            android:layout_weight="1"
+            android:background="@drawable/login_white_rect_border"
+            android:text="SPF 10" />
+    </LinearLayout>
+
+</RelativeLayout>

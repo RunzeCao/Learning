@@ -20,4 +20,20 @@
     <dimen name="login_edit_txt_s">12sp</dimen>
     <dimen name="main_head_height">45dip</dimen>
     <dimen name="head_divider_height">0.5dp</dimen>
+    <!-- list -->
+    <dimen name="widget_list_minHeight">50.0dip</dimen>
+    <dimen name="widget_list_total_margin">12.0dip</dimen>
+    <dimen name="widget_list_right_angle_minHeight">57.0dip</dimen>
+    <!-- dialog-->
+    <dimen name="dialog_date_textSize">17.0sp</dimen>
+    <dimen name="dialog_date_textHeight">48.0dip</dimen>
+    <dimen name="dialog_city_textSize">16.0sp</dimen>
+    <dimen name="dialog_city_textHeight">48.0dip</dimen>
+    <dimen name="dialog_date_selectLineHeight">2.0dip</dimen>
+    <dimen name="dialog_title_text_height">47.0dip</dimen>
+    <dimen name="dialog_min_margin">100.0dip</dimen>
+    <!-- Avatar -->
+    <dimen name="avatar_radius">7.0dip</dimen>
+    <dimen name="avatar_radius_90">90.0dip</dimen>
+
 </resources>

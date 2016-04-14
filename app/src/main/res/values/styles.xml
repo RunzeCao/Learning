@@ -8,4 +8,38 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="BaseTextStyle">
+        <item name="android:textSize">17.0sp</item>
+        <item name="android:textColor">@color/colorBlack</item>
+    </style>
+
+    <style name="ListBackgroundStyle">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginLeft">@dimen/widget_list_total_margin</item>
+        <item name="android:layout_marginRight">@dimen/widget_list_total_margin</item>
+        <item name="android:minHeight">@dimen/widget_list_minHeight</item>
+    </style>
+
+    <style name="ListBackgroundUpStyle" parent="@style/ListBackgroundStyle">
+        <item name="android:background">@drawable/bg_list_up_selector</item>
+        <item name="android:layout_marginLeft">@dimen/widget_list_total_margin</item>
+        <item name="android:layout_marginRight">@dimen/widget_list_total_margin</item>
+    </style>
+
+    <style name="ListBackgroundRightAngleNoFullStyle" parent="@style/ListBackgroundUpStyle">
+        <item name="android:background">@drawable/bg_list_right_angle_no_full_selector</item>
+        <item name="android:layout_marginLeft">0.0dip</item>
+        <item name="android:layout_marginRight">0.0dip</item>
+        <item name="android:minHeight">@dimen/widget_list_right_angle_minHeight</item>
+    </style>
+
+    <!-- RadioButton-->
+    <style name="RadioButton" parent="@android:style/Widget.CompoundButton.RadioButton">
+        <item name="android:textSize">17.0sp</item>
+        <item name="android:textColor">@color/colorBlack</item>
+        <item name="android:paddingLeft">25.0dip</item>
+        <item name="android:paddingRight">10.0dip</item>
+        <item name="android:button">@drawable/bg_radio_btn_selector</item>
+    </style>
 </resources>

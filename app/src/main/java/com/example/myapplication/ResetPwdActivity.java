@@ -49,6 +49,7 @@ public class ResetPwdActivity extends BaseActivity implements View.OnClickListen
         reset_pwd_new = (EditText) this.findViewById(R.id.reset_pwd_new);
         reset_pwd_ok = (TextView) this.findViewById(R.id.reset_pwd_ok);
         reset_pwd_ok.setOnClickListener(this);
+        reset_pwd_user.setText("15116404484");
     }
 
     @Override
