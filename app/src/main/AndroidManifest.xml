@@ -68,7 +68,8 @@
 
         <activity android:name=".BaseActivity" />
         <activity android:name=".ResetPwdActivity" />
-        <activity android:name=".RegisterActivity"></activity>
+        <activity android:name=".RegisterActivity"/>
+        <activity android:name=".PersionalInfoActivity1"/>
     </application>
 
 </manifest>

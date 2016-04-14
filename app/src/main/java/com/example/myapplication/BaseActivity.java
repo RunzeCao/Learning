@@ -66,13 +66,5 @@ public class BaseActivity extends Activity {
         RequestManager.addRequest(request, this);
     }
 
-    protected Response.ErrorListener errorListener() {
-        return new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Toast.makeText(mActivity, error.getMessage(), Toast.LENGTH_LONG).show();
-            }
-        };
-    }
 
 }

@@ -1,7 +1,6 @@
 package com.example.myapplication;
 
 import android.os.CountDownTimer;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -12,8 +11,10 @@ import android.widget.TextView;
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
+import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.example.myapplication.mine.Constant;
+import com.example.myapplication.utils.LogUtils;
 import com.example.myapplication.utils.NetUtils;
 import com.example.myapplication.utils.StringUtils;
 import com.example.myapplication.utils.ToastUtils;
@@ -111,17 +112,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
     }
 
     private void verificationPhoneIsRegistery(final String input_register_user) {
-        executeRequest(new StringRequest(Request.Method.POST, Constant.REQUEST_URL + Constant.GET_VERIFICATION_CODE, requestListener(), errorListener()) {
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                return new ApiParams().with("Phone", input_register_user);
-            }
-        });
-
-    }
-
-    private Response.Listener<String> requestListener() {
-        return new Response.Listener<String>() {
+        executeRequest(new StringRequest(Request.Method.POST, Constant.REQUEST_URL + Constant.GET_VERIFICATION_CODE, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 Log.d("onResponse", response);
@@ -141,11 +132,21 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-
-
             }
-        };
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                ToastUtils.makeText(mContext, error.getMessage());
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                return new ApiParams().with("Phone", input_register_user);
+            }
+        });
+
     }
+
 
     private void registerCompleteHandle() {
         boolean networkAvailable = NetUtils.isNetworkAvailable(mContext);
@@ -206,8 +207,35 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
         requestRegistery(input_register_user, input_register_pwd);
     }
 
-    private void requestRegistery(String input_register_user, String input_register_pwd) {
-
+    private void requestRegistery(final String input_register_user, final String input_register_pwd) {
+        executeRequest(new StringRequest(Request.Method.POST, Constant.REQUEST_URL + Constant.REGISTRY_PHONE, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                LogUtils.d(response);
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    if ("ok".equalsIgnoreCase(jsonObject.optString("result"))) {
+                        ToastUtils.makeText(mContext, mRes.getString(R.string.registered_ok));
+                        goAction(LoginActivity.class, true);
+                    } else {
+                        String errorstr = jsonObject.optString("message");
+                        ToastUtils.makeText(mContext, errorstr);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                ToastUtils.makeText(mContext, error.getMessage());
+            }
+        }){
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                return new ApiParams().with("phone",input_register_user).with("password",input_register_pwd);
+            }
+        });
     }
 
 

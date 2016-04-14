@@ -5,7 +5,7 @@ import android.util.Log;
 
 public class LogUtils {
     public static final boolean IS_DEBUG = true;
-    public static final String TAG = "CRZ";
+    public static final String TAG = "METAGEM";
 
     public static void d(String msg) {
         if (IS_DEBUG) {

@@ -7,9 +7,11 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
+import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.example.myapplication.mine.Constant;
@@ -121,19 +123,11 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     }
 
     private void requestLogin(final String input_login_account, final String input_login_pwd) {
-        executeRequest(new StringRequest(Request.Method.POST, Constant.REQUEST_URL + Constant.LOGIN, requestListener(), errorListener()) {
-            public Map<String, String> getParams() {
-                return new ApiParams().with("Account", input_login_account).with("Password", input_login_pwd);
-            }
-        });
-    }
-
-    private Response.Listener<String> requestListener() {
-        return new Response.Listener<String>() {
+        executeRequest(new StringRequest(Request.Method.POST, Constant.REQUEST_URL + Constant.LOGIN, new Response.Listener<String>() {
             @Override
-            public void onResponse(String s) {
+            public void onResponse(String response) {
                 try {
-                    JSONObject jsonObject = new JSONObject(s);
+                    JSONObject jsonObject = new JSONObject(response);
                     LogUtils.d(jsonObject.get("result").toString());
                     if ("ok".equalsIgnoreCase(jsonObject.optString("result"))) {
                         String message = jsonObject.optString("message");
@@ -156,8 +150,17 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                     ToastUtils.makeText(mContext, mRes.getString(R.string.login_fail));
                 }
             }
-        };
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e(TAG,error.toString());
+                Toast.makeText(mActivity, error.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        }) {
+            public Map<String, String> getParams() {
+                return new ApiParams().with("Account", input_login_account).with("Password", input_login_pwd);
+            }
+        });
     }
-
 
 }
