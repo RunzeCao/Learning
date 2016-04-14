@@ -1,10 +1,12 @@
 package com.example.myapplication;
 
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
@@ -14,7 +16,8 @@ import android.widget.TextView;
 import com.example.myapplication.mine.UserConstant;
 import com.example.myapplication.utils.LogUtils;
 import com.example.myapplication.utils.ToastUtils;
-import com.example.myapplication.widget.DatePickerFragment;
+
+import java.util.Calendar;
 
 /**
  * Created by 123 on 2016/4/13.
@@ -30,6 +33,7 @@ public class PersionalInfoActivity1 extends BaseActivity implements View.OnClick
     private RadioButton info1_female;
     private Button info1_continue;
     private Button info1_have_account;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,8 +68,8 @@ public class PersionalInfoActivity1 extends BaseActivity implements View.OnClick
                 break;
             case R.id.info1_have_account:
                 break;
+        }
     }
-}
 
     private void continueHandle() {
         String userName = info1_name.getText().toString().trim();
@@ -107,9 +111,21 @@ public class PersionalInfoActivity1 extends BaseActivity implements View.OnClick
     }
 
     private void birthdayHandle() {
-        DatePickerFragment datePickerFragment = new DatePickerFragment();
+     /*   DatePickerFragment datePickerFragment = new DatePickerFragment();
         datePickerFragment.show(getFragmentManager(),"datePicker");
         String birth =DatePickerFragment.birth;
-        info1_birthday.setText(birth);
+        info1_birthday.setText(birth);*/
+        Calendar calendar = Calendar.getInstance();
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH);
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+        new DatePickerDialog(mContext, AlertDialog.THEME_HOLO_LIGHT, new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                int month = monthOfYear+1;
+                String birth = year + "-" + month + "-" + dayOfMonth;
+                info1_birthday.setText(birth);
+            }
+        }, year, month, day).show();
     }
 }
