@@ -68,9 +68,12 @@
 
         <activity android:name=".BaseActivity" />
         <activity android:name=".ResetPwdActivity" />
-        <activity android:name=".RegisterActivity"/>
-        <activity android:name=".PersionalInfoActivity1"/>
-        <activity android:name=".PersionalInfoActivity2"/>
+        <activity android:name=".RegisterActivity" />
+        <activity android:name=".PersionalInfoActivity1" />
+        <activity android:name=".PersionalInfoActivity2" />
+        <activity android:name=".PersionalInfoActivity3" />
+        <activity android:name=".AvatarUploadActivity" />
+        <activity android:name=".MineActivity"></activity>
     </application>
 
 </manifest>

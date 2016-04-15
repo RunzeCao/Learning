@@ -128,7 +128,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
             public void onResponse(String response) {
                 try {
                     JSONObject jsonObject = new JSONObject(response);
-                    LogUtils.d(jsonObject.get("result").toString());
+                    LogUtils.d(response);
                     if ("ok".equalsIgnoreCase(jsonObject.optString("result"))) {
                         String message = jsonObject.optString("message");
                         JSONArray jsonArray = jsonObject.getJSONArray("data");

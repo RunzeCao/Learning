@@ -1,0 +1,304 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/main_head_height">
+
+        <ImageView
+            android:id="@+id/mine_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/login_margin_10"
+            android:scaleType="fitCenter"
+            android:src="@mipmap/ic_launcher" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@string/mine_info" />
+
+        <ImageView
+            android:id="@+id/mine_save"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/login_margin_10"
+            android:scaleType="fitCenter"
+            android:src="@mipmap/ic_launcher" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dip"
+            android:layout_alignParentBottom="true"
+            android:background="@color/main_head_spit_color" />
+    </RelativeLayout>
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:background="#FFFFFF"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:id="@+id/mine_avatar_rlt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/mine_avatar"
+                    android:layout_width="60dip"
+                    android:layout_height="60dip"
+                    android:layout_centerHorizontal="true"
+                    android:scaleType="fitCenter"
+                    android:src="@mipmap/ic_launcher" />
+            </RelativeLayout>
+
+            <LinearLayout
+                android:id="@+id/mine_nickname_llt"
+                style="@style/ListBackgroundRightAngleNoFullStyle"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="@dimen/login_padding_5">
+
+                <TextView
+                    android:layout_width="0dip"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/login_margin_10"
+                    android:layout_weight="1"
+                    android:drawableLeft="@mipmap/ic_launcher"
+                    android:drawablePadding="@dimen/login_padding_10"
+                    android:gravity="center_vertical"
+                    android:text="@string/mine_nickname" />
+
+                <TextView
+                    android:id="@+id/mine_nickname"
+                    style="@style/BaseTextStyle"
+                    android:layout_width="0dip"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/login_margin_20"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:drawablePadding="@dimen/login_padding_10"
+                    android:drawableRight="@mipmap/ic_arrow_left" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/mine_birthday_llt"
+                style="@style/ListBackgroundRightAngleNoFullStyle"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="@dimen/login_padding_5">
+
+                <TextView
+                    android:layout_width="0dip"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/login_margin_10"
+                    android:layout_weight="1"
+                    android:drawableLeft="@mipmap/ic_launcher"
+                    android:drawablePadding="@dimen/login_padding_10"
+                    android:gravity="center_vertical"
+                    android:text="@string/mine_birthday" />
+
+                <TextView
+                    android:id="@+id/mine_birthday"
+                    style="@style/BaseTextStyle"
+                    android:layout_width="0dip"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/login_margin_20"
+                    android:layout_weight="1"
+                    android:drawablePadding="@dimen/login_padding_10"
+                    android:drawableRight="@mipmap/ic_arrow_left" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/mine_gender_llt"
+                style="@style/ListBackgroundRightAngleNoFullStyle"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="@dimen/login_padding_5">
+
+                <TextView
+                    android:layout_width="0dip"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/login_margin_10"
+                    android:layout_weight="1"
+                    android:drawableLeft="@mipmap/ic_launcher"
+                    android:drawablePadding="@dimen/login_padding_10"
+                    android:gravity="center_vertical"
+                    android:text="@string/mine_gender" />
+
+                <TextView
+                    android:id="@+id/mine_gender"
+                    style="@style/BaseTextStyle"
+                    android:layout_width="0dip"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/login_margin_20"
+                    android:layout_weight="1"
+                    android:drawablePadding="@dimen/login_padding_10"
+                    android:drawableRight="@mipmap/ic_arrow_left" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/mine_height_llt"
+                style="@style/ListBackgroundRightAngleNoFullStyle"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="@dimen/login_padding_5">
+
+                <TextView
+                    android:layout_width="0dip"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/login_margin_10"
+                    android:layout_weight="1"
+                    android:drawableLeft="@mipmap/ic_launcher"
+                    android:drawablePadding="@dimen/login_padding_10"
+                    android:gravity="center_vertical"
+                    android:text="@string/mine_height" />
+
+                <TextView
+                    android:id="@+id/mine_height"
+                    style="@style/BaseTextStyle"
+                    android:layout_width="0dip"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/login_margin_20"
+                    android:layout_weight="1"
+                    android:drawablePadding="@dimen/login_padding_10"
+                    android:drawableRight="@mipmap/ic_arrow_left" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/mine_weight_llt"
+                style="@style/ListBackgroundRightAngleNoFullStyle"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="@dimen/login_padding_5">
+
+                <TextView
+                    android:layout_width="0dip"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/login_margin_10"
+                    android:layout_weight="1"
+                    android:drawableLeft="@mipmap/ic_launcher"
+                    android:drawablePadding="@dimen/login_padding_10"
+                    android:gravity="center_vertical"
+                    android:text="@string/mine_weight" />
+
+                <TextView
+                    android:id="@+id/mine_weight"
+                    style="@style/BaseTextStyle"
+                    android:layout_width="0dip"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/login_margin_20"
+                    android:layout_weight="1"
+                    android:drawablePadding="@dimen/login_padding_10"
+                    android:drawableRight="@mipmap/ic_arrow_left" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/mine_phone_llt"
+                style="@style/ListBackgroundRightAngleNoFullStyle"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="@dimen/login_padding_5">
+
+                <TextView
+                    android:layout_width="0dip"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/login_margin_10"
+                    android:layout_weight="1"
+                    android:drawableLeft="@mipmap/ic_launcher"
+                    android:drawablePadding="@dimen/login_padding_10"
+                    android:gravity="center_vertical"
+                    android:text="@string/mine_phone" />
+
+                <TextView
+                    android:id="@+id/mine_phone"
+                    style="@style/BaseTextStyle"
+                    android:layout_width="0dip"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/login_margin_20"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:drawablePadding="@dimen/login_padding_10"
+                    android:drawableRight="@mipmap/ic_arrow_left" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/mine_email_llt"
+                style="@style/ListBackgroundRightAngleNoFullStyle"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="@dimen/login_padding_5">
+
+                <TextView
+                    android:layout_width="0dip"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/login_margin_10"
+                    android:layout_weight="1"
+                    android:drawableLeft="@mipmap/ic_launcher"
+                    android:drawablePadding="@dimen/login_padding_10"
+                    android:gravity="center_vertical"
+                    android:text="@string/mine_email" />
+
+                <TextView
+                    android:id="@+id/mine_email"
+                    style="@style/BaseTextStyle"
+                    android:layout_width="0dip"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/login_margin_20"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:drawablePadding="@dimen/login_padding_10"
+                    android:drawableRight="@mipmap/ic_arrow_left" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/mine_reset_pwd_llt"
+                style="@style/ListBackgroundRightAngleNoFullStyle"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="@dimen/login_padding_5">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/login_margin_10"
+                    android:drawableLeft="@mipmap/ic_launcher"
+                    android:drawablePadding="@dimen/login_padding_10"
+                    android:drawableRight="@mipmap/ic_arrow_left"
+                    android:gravity="center_vertical"
+                    android:text="@string/mine_reset_pwd" />
+
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

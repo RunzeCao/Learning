@@ -93,4 +93,31 @@
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
     </string>
+
+    <!-- Avatar -->
+    <string name="preparing_card">准备SD卡</string>
+    <string name="no_storage_card">无SD卡</string>
+    <string name="not_enough_space">没有足够的空间</string>
+    <string name="clip_tip">拖动边框可调节裁剪区域</string>
+    <string name="no_find_picture">没有找到图片</string>
+    <string name="upload">上传</string>
+    <string name="pic_upload_ok">图片上传成功</string>
+    <string name="pic_upload_failed">图片上传失败,请重试</string>
+    <string name="gallery_select_pic">轻选择相片</string>
+    <string name="upload_userinfo_ok">保存用户信息成功</string>
+    <string name="upload_userinfo_fail">保存用户信息失败</string>
+
+    <!-- 个人信息 -->
+    <string name="mine_info">个人信息</string>
+    <string name="mine_nickname">昵称</string>
+    <string name="mine_birthday">出生日期</string>
+    <string name="mine_gender">性别</string>
+    <string name="mine_height">身高</string>
+    <string name="mine_weight">体重</string>
+    <string name="mine_phone">手机号码</string>
+    <string name="mine_email">邮箱</string>
+    <string name="mine_reset_pwd">修改密码</string>
+    <string name="photo_choice_mode">选择方式</string>
+    <string name="photo_mode_camera">相机拍摄</string>
+    <string name="photo_mode_gallery">相册选取</string>
 </resources>

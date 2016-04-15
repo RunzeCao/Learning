@@ -31,6 +31,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/info3_spf_iv"
+        android:layout_marginLeft="@dimen/login_margin_20"
+        android:layout_marginRight="@dimen/login_margin_20"
         android:layout_marginTop="250dip"
         android:orientation="horizontal">
 
@@ -38,19 +40,24 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="left"
-            android:layout_marginLeft="@dimen/login_margin_20"
             android:layout_weight="2"
-            android:paddingTop="@dimen/login_padding_5"
             android:text="@string/sunscreen_recent"
             android:textSize="16sp" />
 
-        <com.qijiu.smart.widget.spinner.NiceSpinner
+        <!--     <com.qijiu.smart.widget.spinner.NiceSpinner
+                 android:id="@+id/info3_spf"
+                 android:layout_width="0dip"
+                 android:layout_height="wrap_content"
+                 android:layout_marginRight="@dimen/login_margin_20"
+                 android:layout_weight="1"
+                 android:background="@drawable/login_white_rect_border"
+                 android:text="SPF 10" />-->
+        <Spinner
             android:id="@+id/info3_spf"
             android:layout_width="0dip"
             android:layout_height="wrap_content"
-            android:layout_marginRight="@dimen/login_margin_20"
             android:layout_weight="1"
-            android:background="@drawable/login_white_rect_border"
+            android:spinnerMode="dropdown"
             android:text="SPF 10" />
     </LinearLayout>
 
