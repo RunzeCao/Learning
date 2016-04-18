@@ -16,9 +16,13 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.android.volley.Network;
+import com.android.volley.toolbox.ImageLoader;
+import com.android.volley.toolbox.NetworkImageView;
 import com.example.myapplication.mine.Constant;
 import com.example.myapplication.mine.UserConstant;
 import com.example.myapplication.utils.StreamUtils;
+import com.example.myapplication.volley.RequestManager;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -36,7 +40,7 @@ public class MineActivity extends BaseActivity implements View.OnClickListener {
 
     private ImageView mine_back;
     private ImageView mine_save;
-    private ImageView mine_avatar;
+    private NetworkImageView mine_avatar;
     private TextView mine_nickname;
     private TextView mine_birthday;
     private TextView mine_gender;
@@ -66,6 +70,7 @@ public class MineActivity extends BaseActivity implements View.OnClickListener {
     private String[] mHeightData;
     private String[] mWeightData;
     private String[] mGenderData;
+    ImageLoader imageLoader;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,11 +82,14 @@ public class MineActivity extends BaseActivity implements View.OnClickListener {
     }
 
     private void init() {
+        imageLoader = RequestManager.getImageLoader();
         String state = Environment.getExternalStorageState();
         if (state.equals(Environment.MEDIA_MOUNTED)) {
             mFileTemp = new File(Environment.getExternalStorageDirectory(), TEMP_PHOTO_FILE_NAME);
+            Log.d(TAG,"Environment"+Environment.getExternalStorageDirectory().toString());
         } else {
             mFileTemp = new File(mContext.getFilesDir(), TEMP_PHOTO_FILE_NAME);
+            Log.d(TAG,mContext.getFilesDir().toString());
         }
     }
 
@@ -107,7 +115,7 @@ public class MineActivity extends BaseActivity implements View.OnClickListener {
         mine_back.setOnClickListener(this);
         mine_save = (ImageView) this.findViewById(R.id.mine_save);
         mine_save.setOnClickListener(this);
-        mine_avatar = (ImageView) this.findViewById(R.id.mine_avatar);
+        mine_avatar = (NetworkImageView) this.findViewById(R.id.mine_avatar);
         mine_avatar.setOnClickListener(this);
         mine_nickname = (TextView) this.findViewById(R.id.mine_nickname);
         mine_birthday = (TextView) this.findViewById(R.id.mine_birthday);
@@ -118,7 +126,8 @@ public class MineActivity extends BaseActivity implements View.OnClickListener {
         mine_email = (TextView) this.findViewById(R.id.mine_email);
 
         if (!TextUtils.isEmpty(mAvatarUrl)) {
-            //TODO
+            Log.d(TAG,"!TextUtils.isEmpty(mAvatarUrl)"+mAvatarUrl);
+            mine_avatar.setImageUrl(mAvatarUrl,imageLoader);
         }
         if (!TextUtils.isEmpty(mNickName)) {
             mine_nickname.setText(mNickName);
@@ -228,8 +237,10 @@ public class MineActivity extends BaseActivity implements View.OnClickListener {
         if (resultCode == Activity.RESULT_OK) {
             Log.d(TAG, "requestCode:" + requestCode);
             if (REQUEST_CODE_TAKE_PICTURE == requestCode) {
+                Log.d(TAG,"REQUEST_CODE_TAKE_PICTURE");
                 startCropImage();
             } else if (REQUEST_CODE_GALLERY == requestCode) {
+                Log.d(TAG,"REQUEST_CODE_GALLERY");
                 try {
                     InputStream inputStream = mContext.getContentResolver().openInputStream(intent.getData());
                     FileOutputStream fileOutputStream = new FileOutputStream(mFileTemp);
@@ -241,9 +252,11 @@ public class MineActivity extends BaseActivity implements View.OnClickListener {
                     Log.e(TAG, "Error while creating temp file" + e.toString());
                 }
             } else if (REQUEST_CODE_CROP_IMAGE == requestCode) {
+                Log.d(TAG,"REQUEST_CODE_CROP_IMAGE");
                 String photoUrl = intent.getStringExtra(Constant.EXTRA_PHOTO_URL);
                 Log.d(TAG, "photoUrl:" + photoUrl);
-                    //TODO
+                int maxMemory = (int) (Runtime.getRuntime().maxMemory() / 1024);
+                Log.d("TAG", "Max memory is " + maxMemory + "KB");
             }
         }
         super.onActivityResult(requestCode, resultCode, intent);
