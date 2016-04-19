@@ -4,11 +4,11 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
 import android.os.Message;
 import android.os.StatFs;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -27,16 +27,11 @@ import com.example.myapplication.utils.ToastUtils;
 import com.example.myapplication.volley.ApiParams;
 import com.example.myapplication.wight.crop.CropImage;
 import com.example.myapplication.wight.crop.CropImageView;
-import com.google.gson.JsonObject;
-
-import java.util.Map;
-
-import android.os.Handler;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.logging.LogRecord;
+import java.util.Map;
 
 public class AvatarUploadActivity extends BaseActivity implements View.OnClickListener {
     private static final String TAG = AvatarUploadActivity.class.getSimpleName();
@@ -49,6 +44,7 @@ public class AvatarUploadActivity extends BaseActivity implements View.OnClickLi
     private CropImageView mImageView;
     private String mImagePath;
     private String mSavedpath;
+    Bitmap bitmap;
 
     private CropImage mCropImg;
     private ImageView rotateBtn;
@@ -69,6 +65,7 @@ public class AvatarUploadActivity extends BaseActivity implements View.OnClickLi
         showStorageToast(this);
         Intent intent = getIntent();
         mImagePath = intent.getStringExtra(Constant.EXTRA_PHOTO_URL);
+
         if (mImagePath == null) {
             this.finish();
             return;
@@ -157,7 +154,11 @@ public class AvatarUploadActivity extends BaseActivity implements View.OnClickLi
 
     private void uploadPhoto() {
         if (!TextUtils.isEmpty(mImagePath)) {
-            final Bitmap bitmap = BitmapFactory.decodeFile(mSavedpath);
+
+            Log.d(TAG,"mImagePath+"+mImagePath);
+            bitmap = BitmapFactory.decodeFile(mSavedpath);
+            Log.d(TAG,"bitmap"+bitmap);
+
             executeRequest(new StringRequest(Request.Method.POST, Constant.REQUEST_URL + Constant.UPLOAD_PHOTO, new Response.Listener<String>() {
                 @Override
                 public void onResponse(String response) {
@@ -168,6 +169,7 @@ public class AvatarUploadActivity extends BaseActivity implements View.OnClickLi
                             ToastUtils.makeText(mContext,"头像上传成功");
                             Intent intent = new Intent();
                             intent.putExtra(Constant.EXTRA_PHOTO_URL, mImagePath);
+
                             setResult(RESULT_OK, intent);
                             finish();
                         }else{
