@@ -79,12 +79,6 @@ public class SplashActivity extends BaseActivity {
             @Override
             public void onPageSelected(int position) {
                 pageIndicator.setActiveMarker(position);
-                if (position == (PAGER_NUMBER - 1)) {
-                    pageIndicator.setVisibility(View.GONE);
-                } else {
-                    pageIndicator.setVisibility(View.VISIBLE);
-                }
-
             }
 
             @Override

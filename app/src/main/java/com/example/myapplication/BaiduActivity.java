@@ -1,9 +1,12 @@
 package com.example.myapplication;
 
+import android.Manifest;
 import android.content.Context;
-import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.View;
@@ -13,7 +16,6 @@ import android.widget.TextView;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.Volley;
 import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
@@ -27,14 +29,15 @@ import com.google.gson.Gson;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class BaiduActivity extends AppCompatActivity {
+public class BaiduActivity extends BaseActivity {
 
     private static final String TAG = BaiduActivity.class.getSimpleName();
     public LocationClient locationClient;
     public BDLocationListener myLocationListener;
     private TextView baiduLocarion, weather;
+    private static final int REQUEST_FINE_LOCATION = 0;
 
-    private Button ifStart,next;
+    private Button ifStart;
     private String city, province, postID;
     String url;
     private static final String WEATHER_ALL = "http://weatherapi.market.xiaomi.com/wtr-v2/weather?cityId=%s";
@@ -48,40 +51,58 @@ public class BaiduActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_baidu);
         baiduLocarion = (TextView) findViewById(R.id.baiduLocation);
-
         weather = (TextView) findViewById(R.id.weather);
-        next = (Button) findViewById(R.id.next);
         dbHelper = new DBHelper(BaiduActivity.this);
-        requestQueue = Volley.newRequestQueue(this);
+        checkPermissionLocation();
     }
 
+    private void checkPermissionLocation() {
+        if (Build.VERSION.SDK_INT >= 23) {
+            int location = ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION);
+            if (location != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, REQUEST_FINE_LOCATION);
+                return;
+            } else {
+                startLocation();
+            }
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch (requestCode) {
+            case REQUEST_FINE_LOCATION:
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    startLocation();
+                }
+                break;
+        }
+    }
 
     @Override
     protected void onStart() {
         super.onStart();
-        locationClient = new LocationClient(getApplicationContext());
-        initLocation();
-        myLocationListener = new MyLocationListener();
-        locationClient.registerLocationListener(myLocationListener);
         ifStart = (Button) findViewById(R.id.ifStart);
         ifStart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (locationClient == null)
-                    return;
-                locationClient.start();
-                locationClient.requestLocation();
+                checkPermissionLocation();
             }
         });
 
-        next.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(BaiduActivity.this,DisplayActivity.class);
-                intent.putExtra("today",today);
-                startActivity(intent);
-            }
-        });
+    }
+
+    private void startLocation() {
+        locationClient = new LocationClient(getApplicationContext());
+        initLocation();
+        myLocationListener = new MyLocationListener();
+        locationClient.registerLocationListener(myLocationListener);
+
+        if (locationClient == null)
+            return;
+        locationClient.start();
+        locationClient.requestLocation();
     }
 
     @Override
@@ -129,112 +150,30 @@ public class BaiduActivity extends AppCompatActivity {
             postID = dbHelper.getPostID(province.replace("省", ""), city.replace("市", ""));
             baiduLocarion.setText("province:" + province + " city:" + city + " postID:" + postID);
             url = String.format(WEATHER_ALL, new Object[]{postID});
-            url += getDeviceInfo(BaiduActivity.this);
+//            url += getDeviceInfo(BaiduActivity.this);
             locationClient.stop();
             Log.d("URL", url);
-            MyStringRequest stringRequest = new MyStringRequest(url, new Response.Listener<String>() {
-
+            executeRequest(new MyStringRequest(url, new Response.Listener<String>() {
                 @Override
                 public void onResponse(String response) {
-                    Log.d(TAG, "response: " + response.replace("forecast", "weatherinfo"));
+
                     try {
                         JSONObject jsonObject = new JSONObject(response);
                         JSONObject todayJsonObject = jsonObject.getJSONObject("today");
-               /*         today = new Today();
-
-                        today.setDate(todayJsonObject.getString("date"));
-                        today.setHumidityMax(todayJsonObject.getInt("humidityMax"));
-                        today.setHumidityMin(todayJsonObject.getInt("humidityMin"));
-                        today.setWindDirectionEnd(todayJsonObject.getString("windDirectionEnd"));
-                        today.setWindDirectionStart(todayJsonObject.getString("windDirectionStart"));
-                        today.setWindMax(todayJsonObject.getInt("windMax"));
-                        today.setWindMin(todayJsonObject.getInt("windMin"));
-                        today.setWeatherEnd(todayJsonObject.getString("weatherEnd"));
-                        today.setWeatherStart(todayJsonObject.getString("weatherStart"));
-                        today.setTempMax(todayJsonObject.getInt("tempMax"));
-                        today.setWindMin(todayJsonObject.getInt("tempMin"));
-
-                        weather.setText(today.toString());*/
                         Gson gson = new Gson();
-                        todayGson = gson.fromJson(todayJsonObject.toString(),TodayGson.class);
-                       // Log.d(TAG, todayGson.getDate().toString());
-                        ToastUtils.makeText(BaiduActivity.this,todayGson.toString());
+                        todayGson = gson.fromJson(todayJsonObject.toString(), TodayGson.class);
+                        ToastUtils.makeText(BaiduActivity.this, todayGson.toString());
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
                 }
             }, new Response.ErrorListener() {
                 @Override
-                public void onErrorResponse(VolleyError error) {
-                    Log.e(TAG, error.toString());
-                }
-            });
-
-            requestQueue.add(stringRequest);
-       /*     JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(url, null, new Response.Listener<JSONObject>() {
-                @Override
-                public void onResponse(JSONObject jsonObject) {
-                    if(jsonObject == null){
-                        Log.d("BaiduActivity","00000");
-                    }else {
-                        Log.d("BaiduActivity","00001");
-                    }
-                    String forecast =jsonObject.optString("forecast");
-                    byte[] bytes = new byte[0];
-                    try {
-                        bytes = forecast.getBytes("iso8859-1");
-                    } catch (UnsupportedEncodingException e) {
-                        e.printStackTrace();
-                    }
-                    try {
-                        Log.d("BaiduActivity", new String(bytes,"UTF-8"));
-                    } catch (UnsupportedEncodingException e) {
-                        e.printStackTrace();
-                    }
-//                    Log.d("BaiduActivity",jsonObject.toString().replace("forecast","weatherinfo"));
-                }
-            }, new Response.ErrorListener() {
-                @Override
                 public void onErrorResponse(VolleyError volleyError) {
-                    Log.e("TAG", volleyError.getMessage(), volleyError);
+                    Log.e(TAG, volleyError.toString());
                 }
-            });*/
+            }));
 
-
-       /*     StringBuilder sb = new StringBuilder();
-            sb.append("time : ");
-            *//**
-             * 时间也可以使用systemClock.elapsedRealtime()方法 获取的是自从开机以来，每次回调的时间；
-             * location.getTime() 是指服务端出本次结果的时间，如果位置不发生变化，则时间不变
-             *//*
-            sb.append(location.getTime());
-            sb.append("\nerror code : ");
-            sb.append(location.getLocType());
-            sb.append("\nlatitude : ");
-            sb.append(location.getLatitude());
-            sb.append("\nlontitude : ");
-            sb.append(location.getLongitude());
-            sb.append("\nradius : ");
-            sb.append(location.getRadius());
-            sb.append("\nCountryCode : ");
-            sb.append(location.getCountryCode());
-            sb.append("\nCountry : ");
-            sb.append(location.getCountry());
-            sb.append("\nprovince : ");
-            sb.append(location.getProvince());
-            sb.append("\ncitycode : ");
-            sb.append(location.getCityCode());
-            sb.append("\ncity : ");
-            sb.append(location.getCity());
-            sb.append("\nDistrict : ");
-            sb.append(location.getDistrict());
-            sb.append("\nStreet : ");
-            sb.append(location.getStreet());
-            sb.append("\naddr : ");
-            sb.append(location.getAddrStr());
-            sb.append("\nDescribe: ");
-            sb.append(location.getLocationDescribe());
-            baiduLocarion.setText(sb.toString());*/
         }
     }
 }

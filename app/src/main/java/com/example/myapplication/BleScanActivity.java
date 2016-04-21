@@ -1,4 +1,4 @@
-package com.example.myapplication.ble;
+package com.example.myapplication;
 
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
@@ -10,9 +10,8 @@ import android.bluetooth.le.ScanResult;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.os.Handler;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -24,13 +23,10 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.myapplication.DeviceControlActivity;
-import com.example.myapplication.R;
-
 import java.util.ArrayList;
 import java.util.List;
 
-public class BleScanActivity extends AppCompatActivity {
+public class BleScanActivity extends Activity {
 
     private BluetoothAdapter mBluetoothAdapter;
     private LeDeviceListAdapter mLeDeviceListAdapter;
