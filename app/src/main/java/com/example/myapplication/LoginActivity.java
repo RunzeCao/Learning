@@ -1,6 +1,5 @@
 package com.example.myapplication;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -12,7 +11,6 @@ import android.widget.Toast;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.example.myapplication.mine.Constant;
 import com.example.myapplication.mine.UserBean;
@@ -27,7 +25,6 @@ import com.example.myapplication.volley.ApiParams;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 
 import java.util.Map;
 
@@ -44,6 +41,10 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        boolean first = PreferenceUitl.getInstance(this).getBoolean(Constant.PRF_FIRST_LOGIN, true);
+        if (first) {
+            goAction(SplashActivity.class, true);
+        }
         initView();
     }
 
