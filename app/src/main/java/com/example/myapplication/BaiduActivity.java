@@ -53,7 +53,7 @@ public class BaiduActivity extends BaseActivity {
         baiduLocarion = (TextView) findViewById(R.id.baiduLocation);
         weather = (TextView) findViewById(R.id.weather);
         dbHelper = new DBHelper(BaiduActivity.this);
-        checkPermissionLocation();
+
     }
 
     private void checkPermissionLocation() {
@@ -62,9 +62,9 @@ public class BaiduActivity extends BaseActivity {
             if (location != PackageManager.PERMISSION_GRANTED) {
                 ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, REQUEST_FINE_LOCATION);
                 return;
-            } else {
-                startLocation();
             }
+        } else {
+            startLocation();
         }
     }
 
@@ -151,13 +151,14 @@ public class BaiduActivity extends BaseActivity {
             baiduLocarion.setText("province:" + province + " city:" + city + " postID:" + postID);
             url = String.format(WEATHER_ALL, new Object[]{postID});
 //            url += getDeviceInfo(BaiduActivity.this);
-            locationClient.stop();
+
             Log.d("URL", url);
             executeRequest(new MyStringRequest(url, new Response.Listener<String>() {
                 @Override
                 public void onResponse(String response) {
 
                     try {
+                        locationClient.stop();
                         JSONObject jsonObject = new JSONObject(response);
                         JSONObject todayJsonObject = jsonObject.getJSONObject("today");
                         Gson gson = new Gson();

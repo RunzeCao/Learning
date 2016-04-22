@@ -43,16 +43,20 @@
             android:value="NWalNP9rRyjEwjDDHlzTkVsqE3OQQQEQ" />
 
         <activity android:name=".LoginActivity">
+
+        </activity>
+        <activity android:name=".MainActivity" />
+        <activity android:name=".BaiduActivity" />
+        <activity android:name=".DisplayActivity" />
+        <activity
+            android:name=".BleScanActivity"
+            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity" />
-        <activity android:name=".BaiduActivity" />
-        <activity android:name=".DisplayActivity" />
-        <activity android:name=".BleScanActivity" />
         <activity android:name=".DeviceControlActivity" />
         <activity android:name=".DateActivity" />
 

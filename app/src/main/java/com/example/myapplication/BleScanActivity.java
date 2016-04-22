@@ -1,17 +1,22 @@
 package com.example.myapplication;
 
+import android.Manifest;
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
-import android.bluetooth.BluetoothManager;
 import android.bluetooth.le.BluetoothLeScanner;
 import android.bluetooth.le.ScanCallback;
 import android.bluetooth.le.ScanResult;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -26,7 +31,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BleScanActivity extends Activity {
+public class BleScanActivity extends AppCompatActivity {
 
     private BluetoothAdapter mBluetoothAdapter;
     private LeDeviceListAdapter mLeDeviceListAdapter;
@@ -35,6 +40,8 @@ public class BleScanActivity extends Activity {
     private boolean mScanning;
     private BluetoothLeScanner bluetoothLeScanner;
     private static final int REQUEST_ENABLE_BT = 1;
+    private final int SCAN_TIME = 10 * 1000;
+    private static final int REQUEST_FINE_LOCATION = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,25 +54,20 @@ public class BleScanActivity extends Activity {
             Toast.makeText(this, R.string.ble_not_supported, Toast.LENGTH_SHORT).show();
             finish();
         }
-        final BluetoothManager bluetoothManager = (BluetoothManager) getSystemService(Context.BLUETOOTH_SERVICE);
+        checkPremission();
+      /*  final BluetoothManager bluetoothManager = (BluetoothManager) getSystemService(Context.BLUETOOTH_SERVICE);
         mBluetoothAdapter = bluetoothManager.getAdapter();
         bluetoothLeScanner = mBluetoothAdapter.getBluetoothLeScanner();
         if (mBluetoothAdapter == null) {
             Toast.makeText(this, R.string.error_bluetooth_not_supported, Toast.LENGTH_SHORT).show();
             finish();
             return;
-        }
+        }*/
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-             if (!mBluetoothAdapter.isEnabled()) {
-            if (!mBluetoothAdapter.isEnabled()) {
-                Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-                startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
-            }
-        }
         lv = (ListView) findViewById(R.id.lv);
         mLeDeviceListAdapter = new LeDeviceListAdapter();
         lv.setAdapter(mLeDeviceListAdapter);
@@ -107,6 +109,7 @@ public class BleScanActivity extends Activity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main, menu);
+        Log.i("YWS","mScanning:"+mScanning);
         if (!mScanning) {
             menu.findItem(R.id.menu_stop).setVisible(false);
             menu.findItem(R.id.menu_scan).setVisible(true);
@@ -114,11 +117,13 @@ public class BleScanActivity extends Activity {
         } else {
             menu.findItem(R.id.menu_stop).setVisible(true);
             menu.findItem(R.id.menu_scan).setVisible(false);
-            menu.findItem(R.id.menu_refresh).setActionView(
-                    R.layout.actionbar_indeterminate_progress);
+            menu.findItem(R.id.menu_refresh).setVisible(true);
+            menu.findItem(R.id.menu_refresh).setActionView( R.layout.actionbar_indeterminate_progress);
+
         }
         return true;
     }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -134,15 +139,57 @@ public class BleScanActivity extends Activity {
         return true;
     }
 
+    private void checkPremission() {
+        if (Build.VERSION.SDK_INT >= 23) {
+            int check = ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION);
+            if (check != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, REQUEST_FINE_LOCATION);
+                return;
+            } else {
+                scanLeDevice(true);
+            }
+        } else {
+            scanLeDevice(true);
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch (requestCode) {
+            case REQUEST_FINE_LOCATION:
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    scanLeDevice(true);
+                }
+                break;
+        }
+    }
+
+    /**
+     * 扫描蓝牙设备
+     */
     private void scanLeDevice(final boolean enable) {
+
+        mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+        if (mBluetoothAdapter == null) {
+            Toast.makeText(this, R.string.error_bluetooth_not_supported, Toast.LENGTH_SHORT).show();
+            finish();
+            return;
+        }
+        if (!mBluetoothAdapter.isEnabled()) {
+            Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+            startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
+        }
+        bluetoothLeScanner = mBluetoothAdapter.getBluetoothLeScanner();
         if (enable) {
             mHandler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
                     mScanning = false;
                     bluetoothLeScanner.stopScan(mScanCallback);
+                    invalidateOptionsMenu();
                 }
-            }, 10000);
+            }, SCAN_TIME);
             mScanning = true;
             bluetoothLeScanner.startScan(mScanCallback);
         } else {
@@ -176,6 +223,7 @@ public class BleScanActivity extends Activity {
             super.onScanFailed(errorCode);
         }
     };
+
 
     private class LeDeviceListAdapter extends BaseAdapter {
 
