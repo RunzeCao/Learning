@@ -19,6 +19,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,13 +33,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BleScanActivity extends AppCompatActivity {
+    private final static String TAG = BleScanActivity.class.getSimpleName();
 
     private BluetoothAdapter mBluetoothAdapter;
     private LeDeviceListAdapter mLeDeviceListAdapter;
     private ListView lv;
     private Handler mHandler;
     private boolean mScanning;
-    private BluetoothLeScanner bluetoothLeScanner;
+    private BluetoothLeScanner mBluetoothLeScanner;
     private static final int REQUEST_ENABLE_BT = 1;
     private final int SCAN_TIME = 10 * 1000;
     private static final int REQUEST_FINE_LOCATION = 0;
@@ -48,45 +50,55 @@ public class BleScanActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ble_scan);
         lv = (ListView) findViewById(R.id.lv);
-
         mHandler = new Handler();
         if (!getPackageManager().hasSystemFeature(PackageManager.FEATURE_BLUETOOTH_LE)) {
             Toast.makeText(this, R.string.ble_not_supported, Toast.LENGTH_SHORT).show();
             finish();
         }
-        checkPremission();
-      /*  final BluetoothManager bluetoothManager = (BluetoothManager) getSystemService(Context.BLUETOOTH_SERVICE);
-        mBluetoothAdapter = bluetoothManager.getAdapter();
-        bluetoothLeScanner = mBluetoothAdapter.getBluetoothLeScanner();
+
+        mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
         if (mBluetoothAdapter == null) {
             Toast.makeText(this, R.string.error_bluetooth_not_supported, Toast.LENGTH_SHORT).show();
             finish();
             return;
-        }*/
+        }
+    }
+
+    @Override
+    public MenuInflater getMenuInflater() {
+        return super.getMenuInflater();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+
+        if (!mBluetoothAdapter.isEnabled()) {
+            Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+            startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
+        }
+
+
         lv = (ListView) findViewById(R.id.lv);
         mLeDeviceListAdapter = new LeDeviceListAdapter();
         lv.setAdapter(mLeDeviceListAdapter);
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Log.d(TAG,"position:"+position);
                 final BluetoothDevice device = mLeDeviceListAdapter.getDevice(position);
                 if (device == null) return;
                 final Intent intent = new Intent(BleScanActivity.this, DeviceControlActivity.class);
                 intent.putExtra(DeviceControlActivity.EXTRAS_DEVICE_NAME, device.getName());
                 intent.putExtra(DeviceControlActivity.EXTRAS_DEVICE_ADDRESS, device.getAddress());
                 if (mScanning) {
-                    bluetoothLeScanner.stopScan(mScanCallback);
+                    mBluetoothLeScanner.stopScan(mScanCallback);
                     mScanning = false;
                 }
                 startActivity(intent);
             }
         });
-        scanLeDevice(true);
+        checkPremission();
     }
 
     @Override
@@ -109,7 +121,6 @@ public class BleScanActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main, menu);
-        Log.i("YWS","mScanning:"+mScanning);
         if (!mScanning) {
             menu.findItem(R.id.menu_stop).setVisible(false);
             menu.findItem(R.id.menu_scan).setVisible(true);
@@ -118,10 +129,10 @@ public class BleScanActivity extends AppCompatActivity {
             menu.findItem(R.id.menu_stop).setVisible(true);
             menu.findItem(R.id.menu_scan).setVisible(false);
             menu.findItem(R.id.menu_refresh).setVisible(true);
-            menu.findItem(R.id.menu_refresh).setActionView( R.layout.actionbar_indeterminate_progress);
+            menu.findItem(R.id.menu_refresh).setActionView(R.layout.actionbar_indeterminate_progress);
 
         }
-        return true;
+        return super.onCreateOptionsMenu(menu);
     }
 
 
@@ -140,6 +151,7 @@ public class BleScanActivity extends AppCompatActivity {
     }
 
     private void checkPremission() {
+
         if (Build.VERSION.SDK_INT >= 23) {
             int check = ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION);
             if (check != PackageManager.PERMISSION_GRANTED) {
@@ -170,31 +182,27 @@ public class BleScanActivity extends AppCompatActivity {
      */
     private void scanLeDevice(final boolean enable) {
 
-        mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-        if (mBluetoothAdapter == null) {
-            Toast.makeText(this, R.string.error_bluetooth_not_supported, Toast.LENGTH_SHORT).show();
-            finish();
+        mBluetoothLeScanner = mBluetoothAdapter.getBluetoothLeScanner();
+        if (mBluetoothLeScanner == null) {
+            //Toast.makeText(this, "mBluetoothLeScanner is null", Toast.LENGTH_SHORT).show();
+            //finish();
             return;
         }
-        if (!mBluetoothAdapter.isEnabled()) {
-            Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-            startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
-        }
-        bluetoothLeScanner = mBluetoothAdapter.getBluetoothLeScanner();
+
         if (enable) {
             mHandler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
                     mScanning = false;
-                    bluetoothLeScanner.stopScan(mScanCallback);
+                    mBluetoothLeScanner.stopScan(mScanCallback);
                     invalidateOptionsMenu();
                 }
             }, SCAN_TIME);
             mScanning = true;
-            bluetoothLeScanner.startScan(mScanCallback);
+            mBluetoothLeScanner.startScan(mScanCallback);
         } else {
             mScanning = false;
-            bluetoothLeScanner.stopScan(mScanCallback);
+            mBluetoothLeScanner.stopScan(mScanCallback);
         }
         invalidateOptionsMenu();
     }

@@ -12,7 +12,8 @@
      See the License for the specific language governing permissions and
      limitations under the License.
 -->
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:compat="http://schemas.android.com/apk/res-auto" >
     <!--
       orderInCategory:每个item的优先级，值越大优先级越低，actionbar地方不够就会放到overflow中
       showAsAction属性共有五个值：ifRoom、never、always、withText、collapseActionView，可以混合使用。
@@ -26,17 +27,19 @@
     <item
         android:id="@+id/menu_refresh"
         android:checkable="false"
-        android:orderInCategory="1"
-        android:showAsAction="always"
-        android:title="111111" />
+        android:orderInCategory="99"
+        compat:showAsAction="ifRoom"
+        android:title="" />
+
+
     <item
         android:id="@+id/menu_scan"
         android:orderInCategory="100"
-        android:showAsAction="ifRoom|withText"
+        compat:showAsAction="ifRoom|withText"
         android:title="@string/menu_scan" />
     <item
         android:id="@+id/menu_stop"
         android:orderInCategory="101"
-        android:showAsAction="ifRoom|withText"
+        compat:showAsAction="ifRoom|withText"
         android:title="@string/menu_stop" />
 </menu>
