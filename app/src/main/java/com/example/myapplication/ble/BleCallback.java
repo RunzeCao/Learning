@@ -6,8 +6,8 @@ import android.bluetooth.BluetoothGattCharacteristic;
 import android.bluetooth.BluetoothGattDescriptor;
 import android.bluetooth.BluetoothProfile;
 import android.content.Context;
-
-import com.example.myapplication.utils.LogUtils;
+import android.content.Intent;
+import android.util.Log;
 
 /**
  * Created by 123 on 2016/4/7.
@@ -16,6 +16,13 @@ import com.example.myapplication.utils.LogUtils;
 public class BleCallback extends BluetoothGattCallback {
 
     private String TAG = BleCallback.class.getSimpleName();
+
+    public final static String ACTION_GATT_CONNECTED = "com.example.myaplication.ACTION_GATT_CONNECTED";
+    public final static String ACTION_GATT_DISCONNECTED = "com.example.myaplication.ACTION_GATT_DISCONNECTED";
+    public final static String ACTION_GATT_SERVICES_DISCOVERED = "com.example.myaplication.ACTION_GATT_SERVICES_DISCOVERED";
+    public final static String ACTION_DATA_AVAILABLE = "com.example.myaplication.ACTION_DATA_AVAILABLE";
+    public final static String EXTRA_DATA = "com.example.myaplication.EXTRA_DATA";
+
 
     private Context context;
 
@@ -76,17 +83,28 @@ public class BleCallback extends BluetoothGattCallback {
     @Override
     public void onConnectionStateChange(BluetoothGatt gatt, int status, int newState) {
         super.onConnectionStateChange(gatt, status, newState);
+        String intentAction;
         if (newState == BluetoothProfile.STATE_DISCONNECTED) {
-            LogUtils.i(TAG, "Discover GattService:STATE_DISCONNECTED");
+            Log.i(TAG, "Discover GattService:STATE_DISCONNECTED");
+            intentAction = ACTION_GATT_DISCONNECTED;
+            broadcastUpdate(intentAction,context);
+
         } else if (newState == BluetoothProfile.STATE_CONNECTING) {
-            LogUtils.i(TAG, "Discover GattService:STATE_CONNECTING");
+            Log.i(TAG, "Discover GattService:STATE_CONNECTING");
         } else if (newState == BluetoothProfile.STATE_CONNECTED) {
-            LogUtils.i(TAG, "Discover GattService:STATE_CONNECTED");
-            //App.STATE_BLE_CONNECTED = true;
+            Log.i(TAG, "Discover GattService:STATE_CONNECTED");
+            intentAction = ACTION_GATT_CONNECTED;
+            broadcastUpdate(intentAction,context);
             gatt.discoverServices();
         } else if (newState == BluetoothProfile.STATE_DISCONNECTING) {
-            //App.STATE_BLE_CONNECTED = false;
-            LogUtils.i(TAG, "Discover GattService:STATE_DISCONNECTING");
+            Log.i(TAG, "Discover GattService:STATE_DISCONNECTING");
+
         }
+    }
+
+
+    private void broadcastUpdate(final String action,Context context) {
+        final Intent intent = new Intent(action);
+        context.sendBroadcast(intent);
     }
 }

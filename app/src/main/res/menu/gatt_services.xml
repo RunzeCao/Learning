@@ -14,20 +14,15 @@
 -->
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:compat="http://schemas.android.com/apk/res-auto">
-    <item
-        android:id="@+id/menu_refresh"
-        android:checkable="false"
-        android:orderInCategory="1"
-        compat:showAsAction="ifRoom"
-        android:title="" />
+
     <item
         android:id="@+id/menu_connect"
         android:orderInCategory="100"
         compat:showAsAction="ifRoom|withText"
         android:title="@string/menu_connect" />
     <item
-        android:id="@+id/menu_disconnect"
+        android:id="@+id/menu_reconnect"
         android:orderInCategory="101"
         compat:showAsAction="ifRoom|withText"
-        android:title="@string/menu_disconnect" />
+        android:title="@string/menu_reconnect" />
 </menu>
