@@ -5,6 +5,7 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.text.TextUtils;
+import android.util.Log;
 
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
@@ -12,7 +13,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class StringUtils {
-
+    private static String TAG = StringUtils.class.getSimpleName();
     /**
      * 验证是否是联通手机号码
      * 联通
@@ -113,4 +114,33 @@ public class StringUtils {
         return str;
     }
 
+
+    /**
+     * 字节转十六进制字符串
+     */
+    public static final String bytes2HexString(byte[] bytes) {
+        StringBuffer sb = new StringBuffer(bytes.length);
+        String temp;
+        for (int i = 0; i < bytes.length; i++) {
+            temp = Integer.toHexString(0xFF & bytes[i]);
+            sb.append("[");
+            if (temp.length() < 2) {
+                sb.append(0);
+            }
+            sb.append(temp.toUpperCase());
+            sb.append("] ");
+        }
+        return sb.toString();
+    }
+    /**
+     * 字节校验和
+     */
+    public static int bytesCheckAnd(byte[] bytes) {
+        int count = 0;
+        for (byte element : bytes) {
+            count += Integer.parseInt(String.valueOf(0xFF & element));
+        }
+        Log.i(TAG, "校验和:" + count);
+        return count;
+    }
 }

@@ -65,6 +65,8 @@ import android.app.Service;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothGatt;
+import android.bluetooth.BluetoothGattCharacteristic;
+import android.bluetooth.BluetoothGattService;
 import android.bluetooth.BluetoothManager;
 import android.content.Context;
 import android.content.Intent;
@@ -80,12 +82,12 @@ public class BleService extends Service {
     private BluetoothManager mBluetoothManager;
     private BluetoothAdapter mBluetoothAdapter;
     private String mBluetoothDeviceAddress;
-    private BluetoothGatt mBluetoothGatt;
+    public BluetoothGatt mBluetoothGatt;
     private int mConnectionState = STATE_DISCONNECTED;
     private static final int STATE_DISCONNECTED = 0;
     private static final int STATE_CONNECTING = 1;
     private static final int STATE_CONNECTED = 2;
-    public BluetoothGatt gatt;
+
 
     @Override
     public IBinder onBind(Intent intent) {
@@ -102,6 +104,7 @@ public class BleService extends Service {
             return BleService.this;
         }
     }
+
     /**
      * Initializes a reference to the local Bluetooth adapter.
      *
@@ -131,11 +134,10 @@ public class BleService extends Service {
      * Connects to the GATT server hosted on the Bluetooth LE device.
      *
      * @param address The device address of the destination device.
-     *
      * @return Return true if the connection is initiated successfully. The connection result
-     *         is reported asynchronously through the
-     *         {@code BluetoothGattCallback#onConnectionStateChange(android.bluetooth.BluetoothGatt, int, int)}
-     *         callback.
+     * is reported asynchronously through the
+     * {@code BluetoothGattCallback#onConnectionStateChange(android.bluetooth.BluetoothGatt, int, int)}
+     * callback.
      */
     public boolean connect(final String address) {
         if (mBluetoothAdapter == null || address == null) {
@@ -194,6 +196,67 @@ public class BleService extends Service {
         mBluetoothGatt.close();
         mBluetoothGatt = null;
     }
+
+    /**
+     * 向BLE设备写数据
+     */  public boolean writeToBle(byte[] bytes) {
+        if (mBluetoothGatt == null) {
+            Log.e(TAG, "gatt == null");
+            return false;
+        }
+        BluetoothGattService gattService = mBluetoothGatt.getService(BleContants.UUID_NUS_SERVICE);
+        if (gattService == null) {
+            Log.e(TAG, "gattService == null");
+            return false;
+        }
+        BluetoothGattCharacteristic gattCharacteristic = gattService.getCharacteristic(BleContants.UUID_NUS_CHARACTER);
+        if (gattCharacteristic == null) {
+            Log.e(TAG, "gattCharacteristic == null");
+            return false;
+        }
+        gattCharacteristic.setValue(bytes);
+        return mBluetoothGatt.writeCharacteristic(gattCharacteristic);
+    }
+  /*  public boolean writeToBle(BluetoothGatt gatt, byte[] bytes) {
+        if (gatt == null) {
+            Log.e(TAG, "gatt == null");
+            return false;
+        }
+        BluetoothGattService gattService = gatt.getService(BleContants.UUID_NUS_SERVICE);
+        if (gattService == null) {
+            Log.e(TAG, "gattService == null");
+            return false;
+        }
+        BluetoothGattCharacteristic gattCharacteristic = gattService.getCharacteristic(BleContants.UUID_NUS_CHARACTER);
+        if (gattCharacteristic == null) {
+            Log.e(TAG, "gattCharacteristic == null");
+            return false;
+        }
+        gattCharacteristic.setValue(bytes);
+        return gatt.writeCharacteristic(gattCharacteristic);
+    }*/
+
+    /**
+     * 读BLE设备数据
+     */
+    public boolean readFromBle() {
+        if (mBluetoothGatt == null) {
+            Log.e(TAG, "gatt == null");
+            return false;
+        }
+        BluetoothGattService gattService = mBluetoothGatt.getService(BleContants.UUID_NUS_SERVICE);
+        if (gattService == null) {
+            Log.e(TAG, "gattService == null");
+            return false;
+        }
+        BluetoothGattCharacteristic gattCharacteristic = gattService.getCharacteristic(BleContants.UUID_NUS_CHARACTER);
+        if (gattCharacteristic == null) {
+            Log.e(TAG, "gattCharacteristic == null");
+            return false;
+        }
+        return mBluetoothGatt.readCharacteristic(gattCharacteristic);
+    }
+
 
 }
 
