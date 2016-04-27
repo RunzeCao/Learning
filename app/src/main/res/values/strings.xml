@@ -120,4 +120,17 @@
     <string name="photo_choice_mode">选择方式</string>
     <string name="photo_mode_camera">相机拍摄</string>
     <string name="photo_mode_gallery">相册选取</string>
+
+    <string name="picture">Picture</string>
+    <string name="description_info">Info</string>
+        <string name="intro_message">
+        <![CDATA[
+
+
+            This sample demonstrates the basic use of Camera2 API. Check the source code to see how
+            you can display camera preview and take pictures.
+
+
+        ]]>
+    </string>
 </resources>
