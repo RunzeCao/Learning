@@ -6,6 +6,8 @@ import android.view.TextureView;
 
 /**
  * Created by 123 on 2016/4/27.
+ *
+ *  自动调整宽高的TextureView
  */
 public class AutoFitTextureView extends TextureView {
 
