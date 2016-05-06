@@ -6,31 +6,9 @@
     android:orientation="vertical"
     tools:context="com.example.myapplication.LifecycleActivity">
 
-    <Button
-        android:id="@+id/button"
+
+    <ImageView
+        android:id="@+id/iv"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="FileDir()" />
-
-    <Button
-        android:id="@+id/button1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="CacheDir()" />
-
-    <Button
-        android:id="@+id/button2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="ExternalFilesDir() ()" />
-
-
-    <Button
-        android:id="@+id/button3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="ExternalStoragePublicDirectory()" />
-
-
-
+        android:layout_height="wrap_content" />
 </LinearLayout>

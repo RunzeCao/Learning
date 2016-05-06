@@ -1,54 +1,38 @@
 package com.example.myapplication;
 
+import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.os.Environment;
 import android.os.PersistableBundle;
-import android.support.v7.app.AppCompatActivity;
-import android.view.View;
-import android.widget.Button;
+import android.widget.ImageView;
 
-import com.example.myapplication.utils.ToastUtils;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.ImageRequest;
 
-public class LifecycleActivity extends AppCompatActivity {
+public class LifecycleActivity extends BaseActivity {
 
-    private Button button,button1,button2,button3;
+    private ImageView iv;
+
     //Activity被创建时调用
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lifecycle);
-        button = (Button) findViewById(R.id.button);
-        button.setOnClickListener(new View.OnClickListener() {
+
+
+        iv = (ImageView) findViewById(R.id.iv);
+        executeRequest(new ImageRequest("https://lh3.googleusercontent.com/-Iwi6-i6IexY/URqvAYZHsVI/AAAAAAAAAbs/5ETWl4qXsFE/s1024/Shinjuku%252520Street.jpg", new Response.Listener<Bitmap>() {
             @Override
-            public void onClick(View v) {
-                String fileDir = getFilesDir().toString();
-                ToastUtils.makeText(LifecycleActivity.this,fileDir);
+            public void onResponse(Bitmap bitmap) {
+                iv.setImageBitmap(bitmap);
             }
-        });
-        button1 = (Button) findViewById(R.id.button1);
-        button1.setOnClickListener(new View.OnClickListener() {
+        }, 0, 0, Bitmap.Config.ARGB_8888, new Response.ErrorListener() {
             @Override
-            public void onClick(View v) {
-                String cacheDir = getCacheDir().toString();
-                ToastUtils.makeText(LifecycleActivity.this,cacheDir);
+            public void onErrorResponse(VolleyError volleyError) {
+                iv.setImageResource(R.mipmap.ic_launcher);
             }
-        });
-        button2 = (Button) findViewById(R.id.button2);
-        button2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String externalStorageDirectory = getExternalFilesDir(Environment.DIRECTORY_PICTURES).toString();
-                ToastUtils.makeText(LifecycleActivity.this,externalStorageDirectory);
-            }
-        });
-        button3 = (Button) findViewById(R.id.button3);
-        button3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String externalStoragePublicDirectory = getExternalCacheDir().toString();
-                ToastUtils.makeText(LifecycleActivity.this,externalStoragePublicDirectory);
-            }
-        });
+        }));
+        iv.setImageResource(R.mipmap.ad);
     }
 
     //Activity被创建或者从后台重新回到前台时调用
