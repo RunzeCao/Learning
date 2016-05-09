@@ -22,6 +22,7 @@ import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
 import com.example.myapplication.db.DBHelper;
 import com.example.myapplication.utils.ToastUtils;
+import com.example.myapplication.volley.MyStringRequest;
 import com.example.myapplication.weather.Today;
 import com.example.myapplication.weather.TodayGson;
 import com.google.gson.Gson;

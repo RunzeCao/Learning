@@ -115,7 +115,7 @@ public class ImageResizer extends ImageWorker {
         }
     }
 
-    public void loadBitmao(int resId, ImageView imageView) {
+    public void loadBitmap(int resId, ImageView imageView) {
         BitmapWorkerTask bitmapWorkerTask = new BitmapWorkerTask(imageView);
         bitmapWorkerTask.execute(resId);
     }

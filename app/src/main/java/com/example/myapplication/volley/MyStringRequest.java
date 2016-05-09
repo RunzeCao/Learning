@@ -1,4 +1,4 @@
-package com.example.myapplication;
+package com.example.myapplication.volley;
 
 import com.android.volley.NetworkResponse;
 import com.android.volley.Response;

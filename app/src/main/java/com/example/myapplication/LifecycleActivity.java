@@ -33,6 +33,7 @@ public class LifecycleActivity extends BaseActivity {
             }
         }));
         iv.setImageResource(R.mipmap.ad);
+
     }
 
     //Activity被创建或者从后台重新回到前台时调用
