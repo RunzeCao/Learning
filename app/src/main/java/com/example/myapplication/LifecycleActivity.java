@@ -1,17 +1,14 @@
 package com.example.myapplication;
 
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.PersistableBundle;
-import android.widget.ImageView;
+import android.view.View;
+import android.widget.Button;
 
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.ImageRequest;
+import com.example.myapplication.wight.PieChart;
 
 public class LifecycleActivity extends BaseActivity {
 
-    private ImageView iv;
 
     //Activity被创建时调用
     @Override
@@ -19,21 +16,19 @@ public class LifecycleActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lifecycle);
 
+        final PieChart pie = (PieChart) this.findViewById(R.id.Pie);
+        pie.addItem("Agamemnon", 2, getResources().getColor(R.color.seafoam));
+        pie.addItem("Bocephus", 3.5f, getResources().getColor(R.color.chartreuse));
+        pie.addItem("Calliope", 2.5f, getResources().getColor(R.color.emerald));
+        pie.addItem("Daedalus", 3, getResources().getColor(R.color.bluegrass));
+        pie.addItem("Euripides", 1, getResources().getColor(R.color.turquoise));
+        pie.addItem("Ganymede", 3, getResources().getColor(R.color.slate));
 
-        iv = (ImageView) findViewById(R.id.iv);
-        executeRequest(new ImageRequest("https://lh3.googleusercontent.com/-Iwi6-i6IexY/URqvAYZHsVI/AAAAAAAAAbs/5ETWl4qXsFE/s1024/Shinjuku%252520Street.jpg", new Response.Listener<Bitmap>() {
-            @Override
-            public void onResponse(Bitmap bitmap) {
-                iv.setImageBitmap(bitmap);
+        ((Button) findViewById(R.id.Reset)).setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+                pie.setCurrentItem(0);
             }
-        }, 0, 0, Bitmap.Config.ARGB_8888, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError volleyError) {
-                iv.setImageResource(R.mipmap.ic_launcher);
-            }
-        }));
-        iv.setImageResource(R.mipmap.ad);
-
+        });
     }
 
     //Activity被创建或者从后台重新回到前台时调用
