@@ -1,21 +1,49 @@
 package com.example.myapplication;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.os.PersistableBundle;
+import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Button;
+import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.TextView;
 
-import com.example.myapplication.wight.PieChart;
+import com.example.myapplication.wight.CustomTitleView;
+import com.example.myapplication.wight.MyListView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class LifecycleActivity extends BaseActivity {
 
 
+    private MyAdapter adapter;
     //Activity被创建时调用
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lifecycle);
+        final CustomTitleView customTitleView = (CustomTitleView) findViewById(R.id.myView);
+        customTitleView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                customTitleView.setVisibility(View.INVISIBLE);
+            }
+        });
 
+        initList();
+        MyListView myListView = (MyListView) findViewById(R.id.myListView);
+        adapter = new MyAdapter(this,0,contentList);
+        myListView.setAdapter(adapter);
+        myListView.setOnDeleteListener(new MyListView.OnDeleteListener() {
+            @Override
+            public void onDelete(int index) {
+                contentList.remove(index);
+                adapter.notifyDataSetChanged();
+            }
+        });
+/*
         final PieChart pie = (PieChart) this.findViewById(R.id.Pie);
         pie.addItem("Agamemnon", 2, getResources().getColor(R.color.seafoam));
         pie.addItem("Bocephus", 3.5f, getResources().getColor(R.color.chartreuse));
@@ -28,7 +56,8 @@ public class LifecycleActivity extends BaseActivity {
             public void onClick(View view) {
                 pie.setCurrentItem(0);
             }
-        });
+        });*/
+
     }
 
     //Activity被创建或者从后台重新回到前台时调用
@@ -89,5 +118,47 @@ public class LifecycleActivity extends BaseActivity {
         super.onDestroy();
     }
 
+    private List<String> contentList = new ArrayList<String>();
 
+    private void initList() {
+        contentList.add("Content Item 1");
+        contentList.add("Content Item 2");
+        contentList.add("Content Item 3");
+        contentList.add("Content Item 4");
+        contentList.add("Content Item 5");
+        contentList.add("Content Item 6");
+        contentList.add("Content Item 7");
+        contentList.add("Content Item 8");
+        contentList.add("Content Item 9");
+        contentList.add("Content Item 10");
+        contentList.add("Content Item 11");
+        contentList.add("Content Item 12");
+        contentList.add("Content Item 13");
+        contentList.add("Content Item 14");
+        contentList.add("Content Item 15");
+        contentList.add("Content Item 16");
+        contentList.add("Content Item 17");
+        contentList.add("Content Item 18");
+        contentList.add("Content Item 19");
+        contentList.add("Content Item 20");
+    }
+
+    private class MyAdapter extends ArrayAdapter {
+        public MyAdapter(Context context, int resource, List<String> lists) {
+            super(context, resource, lists);
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            View view;
+            if (convertView == null) {
+                view = LayoutInflater.from(getContext()).inflate(R.layout.my_list_view_item, null);
+            } else {
+                view = convertView;
+            }
+            TextView textView = (TextView) view.findViewById(R.id.text_view);
+            textView.setText((String)getItem(position));
+            return view;
+        }
+    }
 }

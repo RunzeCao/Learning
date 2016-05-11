@@ -8,27 +8,48 @@
     tools:context="com.example.myapplication.LifecycleActivity">
 
 
-    <com.example.myapplication.wight.PieChart
-        android:id="@+id/Pie"
-        custom:autoCenterPointerInSlice="true"
-        custom:highlightStrength="1.12"
-        custom:labelColor="@android:color/black"
-        custom:labelHeight="20dp"
-        custom:labelPosition="left"
-        custom:labelWidth="110dp"
-        custom:labelY="85dp"
-        custom:pieRotation="0"
-        custom:pointerRadius="4dp"
-        custom:showText1="true"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="100"
-        android:background="@android:color/white"
-        android:padding="10dp" />
+    <!-- <com.example.myapplication.wight.PieChart
+         android:id="@+id/Pie"
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+         android:layout_weight="100"
+         android:background="@android:color/white"
+         android:padding="10dp"
+         custom:autoCenterPointerInSlice="true"
+         custom:highlightStrength="1.12"
+         custom:labelColor="@android:color/black"
+         custom:labelHeight="20dp"
+         custom:labelPosition="left"
+         custom:labelWidth="110dp"
+         custom:labelY="85dp"
+         custom:pieRotation="0"
+         custom:pointerRadius="4dp"
+         custom:showText1="true" />
 
-    <Button
-        android:id="@+id/Reset"
-        android:layout_width="match_parent"
+     <Button
+         android:id="@+id/Reset"
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+         android:text="reset" />-->
+
+    <com.example.myapplication.wight.CustomTitleView
+        android:id="@+id/myView"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="reset" />
+        android:padding="20dp"
+        custom:titleText="customTitleView"
+        custom:titleTextColor1="#528963"
+        custom:titleTextSize="20sp" />
+
+    <com.example.myapplication.wight.CountView
+        android:layout_width="100dp"
+        android:layout_height="100dp" />
+
+    <com.example.myapplication.wight.MyListView
+
+        android:id="@+id/myListView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+
 </LinearLayout>
