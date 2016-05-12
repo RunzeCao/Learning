@@ -48,7 +48,7 @@
         <activity android:name=".MainActivity" />
         <activity android:name=".BaiduActivity" />
         <activity android:name=".DisplayActivity" />
-        <activity android:name=".BleScanActivity"></activity>
+        <activity android:name=".BleScanActivity" />
         <activity android:name=".DeviceControlActivity" />
         <activity android:name=".DateActivity" />
 
@@ -76,10 +76,11 @@
         <activity android:name=".SplashActivity" />
         <activity
             android:name=".CameraActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
+        <activity android:name=".LifecycleActivity">
 
         </activity>
-        <activity android:name=".LifecycleActivity">
+        <activity android:name=".ADActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
