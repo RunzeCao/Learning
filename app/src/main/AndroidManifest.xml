@@ -77,11 +77,12 @@
         <activity
             android:name=".CameraActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
-        <activity android:name=".LifecycleActivity"/>
-        <activity android:name=".ADActivity">
+        <activity android:name=".LifecycleActivity" />
+        <activity android:name=".ADActivity"></activity>
+        <activity android:name=".MyViewPagerActivity">
 
         </activity>
-        <activity android:name=".MyViewPagerActivity">
+        <activity android:name=".MyViewActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
