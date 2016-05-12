@@ -120,6 +120,12 @@ public class ADActivity extends BaseActivity {
 
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        isRunning = false;
+    }
+
     //自动翻页
     private boolean isRunning = false;
     private Handler handler = new Handler() {
