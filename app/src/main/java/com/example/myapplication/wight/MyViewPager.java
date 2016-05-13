@@ -83,6 +83,63 @@ public class MyViewPager extends ViewGroup {
             child.layout(i * getWidth(), 0, getWidth() + i * getWidth(), getHeight());
         }
     }
+    /**
+     * 对View进行测量
+     * 如果当前View是ViewGroup的话，那么ViewGroup有义务对每个子View测量大小
+     */
+    @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+        for(int i=0;i<getChildCount();i++){
+            View child = getChildAt(i);
+            child.measure(widthMeasureSpec, heightMeasureSpec);
+        }
+    }
+    /**
+     *  第一次按下的X的坐标
+     */
+    private float downX;
+    /**
+     *  第一次按下的Y的坐标
+     */
+    private float downY;
+
+    /**
+    /**
+     * 是否中断事件的传递，默认返回false,意思为，不中断，按正常情况，传递事件
+     * 如果为true，就将事件中断，直接执行自己的onTounchEvent方法
+     */
+    @Override
+    public boolean onInterceptTouchEvent(MotionEvent ev) {
+        boolean result = false;
+        // 如果水平方向滑动的距离大于竖直方向滑动，就是左右滑动，中断事件；否则事件继续传递；
+        switch(ev.getAction()){
+            case MotionEvent.ACTION_DOWN:
+                detector.onTouchEvent(ev);
+                //第一次按下的坐标
+                downX = ev.getX();
+                downY = ev.getY();
+                break;
+            case MotionEvent.ACTION_MOVE:
+                //2.来到新的坐标
+                float newDownX =  ev.getX();
+                float newDownY =  ev.getY();
+                //3.计算距离
+                int distanceX = (int) Math.abs(newDownX - downX);
+                int distanceY = (int) Math.abs(newDownY - downY);
+                //distanceX > 10 防止抖动为1左右的情况
+                if(distanceX > distanceY && distanceX > 100){
+                    result = true;
+                }
+                break;
+            case MotionEvent.ACTION_UP:
+                break;
+            default:
+                break;
+
+        }
+        return result;
+    }
 
     private GestureDetector detector;
     private Scroller scroller;
@@ -171,10 +228,10 @@ public class MyViewPager extends ViewGroup {
                 int endX = (int) event.getX();
                 //3.计算位置，得出该定位到那个子View的坐标
                 int tempIndex = curIndex;
-                if (endX - startX > getWidth() / 2) {
+                if (endX - startX > getWidth() / 5) {
                     //显示上一个子View
                     tempIndex--;
-                } else if (startX - endX >= getWidth() / 2) {
+                } else if (startX - endX >= getWidth() / 5) {
                     //显示下一个子View
                     tempIndex++;
                 }

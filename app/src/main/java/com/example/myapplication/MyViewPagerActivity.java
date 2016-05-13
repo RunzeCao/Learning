@@ -2,6 +2,7 @@ package com.example.myapplication;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -28,6 +29,8 @@ public class MyViewPagerActivity extends BaseActivity {
             myViewPager.addView(image);
 
         }
+        View v = View.inflate(this,R.layout.test,null);
+        myViewPager.addView(v);
 
         for (int i = 0; i < myViewPager.getChildCount(); i++) {
             final RadioButton radioButton = new RadioButton(this);

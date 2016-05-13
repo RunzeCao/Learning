@@ -22,25 +22,25 @@ public class MyView extends View {
 
     public MyView(Context context) {
         super(context);
-        init(context);
+        init();
     }
 
     public MyView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        init(context);
+        init();
     }
 
     public MyView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        init(context);
+        init();
     }
 
     public MyView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
-        init(context);
+        init();
     }
 
-    private void init(Context context) {
+    private void init() {
         mPaint = new Paint();
         //抗锯齿
         mPaint.setAntiAlias(true);
@@ -83,9 +83,9 @@ public class MyView extends View {
      */
     @Override
     protected void onDraw(Canvas canvas) {
-        canvas.drawCircle(200, 200, 100, mPaint);
+        //canvas.drawCircle(200, 200, 100, mPaint);
         if (pointX != 0 && pointY != 0) {
-            canvas.drawCircle(pointX, pointY, 100, mPaint);
+            canvas.drawCircle(pointX, pointY, radius, mPaint);
             if (mPaint.getAlpha() > 0) {
                 handler.sendEmptyMessageDelayed(0, 50);
             }
@@ -108,10 +108,8 @@ public class MyView extends View {
             case MotionEvent.ACTION_DOWN://按下屏幕
                 pointX = event.getX();
                 pointY = event.getY();
-
                 //对圆进行初始化
-                init(null);
-
+                init();
                 //刷新
                 invalidate();
                 break;

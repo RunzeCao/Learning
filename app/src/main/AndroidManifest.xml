@@ -80,14 +80,14 @@
         <activity android:name=".LifecycleActivity" />
         <activity android:name=".ADActivity"></activity>
         <activity android:name=".MyViewPagerActivity">
-
-        </activity>
-        <activity android:name=".MyViewActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity android:name=".MyViewActivity">
+
         </activity>
     </application>
 
