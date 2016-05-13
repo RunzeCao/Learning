@@ -40,6 +40,7 @@ public class MyViewPagerActivity extends BaseActivity {
                 radioButton.setChecked(true);
             }
         }
+        //A调用B类中的方法C
         myViewPager.setChangeListener(new MyViewPager.PageChangeListener() {
             @Override
             public void moveTo(int curIndex) {
