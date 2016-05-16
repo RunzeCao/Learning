@@ -107,7 +107,7 @@ public class MyViewPager extends ViewGroup {
     private float downY;
 
     /**
-     * /**
+     *
      * 是否中断事件的传递，默认返回false,意思为，不中断，按正常情况，传递事件
      * 如果为true，就将事件中断，直接执行自己的onTounchEvent方法
      */

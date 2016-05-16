@@ -78,16 +78,17 @@
             android:name=".CameraActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity android:name=".LifecycleActivity" />
-        <activity android:name=".ADActivity"></activity>
+        <activity android:name=".ADActivity" />
         <activity android:name=".MyViewPagerActivity">
+
+        </activity>
+        <activity android:name=".MyViewActivity"></activity>
+        <activity android:name=".eventBus.EventBusActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-        <activity android:name=".MyViewActivity">
-
         </activity>
     </application>
 
