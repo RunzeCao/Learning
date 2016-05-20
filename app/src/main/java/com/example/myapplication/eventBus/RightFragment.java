@@ -52,6 +52,7 @@ public class RightFragment extends Fragment {
      *
      * @param msg 事件1
      */
+    @Subscribe
     public void onEvent(MsgEvent1 msg) {
         String content = msg.getMsg() + "\n ThreadName: " + Thread.currentThread().getName() + "\n ThreadId: " + Thread.currentThread().getId();
         Log.d(TAG, "onEvent(MsgEvent1 msg)收到" + content);

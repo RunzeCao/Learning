@@ -5,6 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context="com.example.myapplication.LoginActivity">
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -48,7 +49,7 @@
 
         <EditText
             android:id="@+id/login_pwd"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="@dimen/login_height"
             android:layout_marginTop="@dimen/login_margin_10"
             android:background="@drawable/login_white_rect_border"
