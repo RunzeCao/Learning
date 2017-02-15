@@ -14,7 +14,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
+import android.widget.TextView;
 
 import com.example.myapplication.ble.BleCallback;
 import com.example.myapplication.ble.BleDataset;
@@ -30,8 +30,9 @@ public class DeviceControlActivity extends AppCompatActivity implements View.OnC
     private String mDeviceName;
     private String mDeviceAddress;
     private boolean mConnected = false;
-    private Button btn_write, btn_read, btn_persional_info, btn_device_type, btn_device_code, btn_step,
-            btn_light_open;
+    private TextView tv_info;
+   /* private Button btn_write, btn_read, btn_persional_info, btn_device_type, btn_device_code, btn_step,
+            btn_light_open;*/
     private ServiceConnection serviceConnection = new ServiceConnection() {
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
@@ -62,7 +63,8 @@ public class DeviceControlActivity extends AppCompatActivity implements View.OnC
         mDeviceName = getIntent().getStringExtra(EXTRAS_DEVICE_NAME);
         setTitle(mDeviceName);
 
-        btn_write = (Button) findViewById(R.id.btn_write);
+        tv_info = (TextView) findViewById(R.id.tv_info);
+     /*   btn_write = (Button) findViewById(R.id.btn_write);
         btn_write.setOnClickListener(this);
         btn_read = (Button) findViewById(R.id.btn_read);
         btn_read.setOnClickListener(this);
@@ -75,7 +77,7 @@ public class DeviceControlActivity extends AppCompatActivity implements View.OnC
         btn_step = (Button) findViewById(R.id.btn_step);
         btn_step.setOnClickListener(this);
         btn_light_open = (Button) findViewById(R.id.btn_light_open);
-        btn_light_open.setOnClickListener(this);
+        btn_light_open.setOnClickListener(this);*/
 
         Intent intent = new Intent(this, BleService.class);
         this.bindService(intent, serviceConnection, BIND_AUTO_CREATE);
@@ -100,11 +102,11 @@ public class DeviceControlActivity extends AppCompatActivity implements View.OnC
         getMenuInflater().inflate(R.menu.gatt_services, menu);
 
         if (!mConnected) {
-            menu.findItem(R.id.menu_connect).setVisible(false);
-            menu.findItem(R.id.menu_reconnect).setVisible(true);
-        } else {
             menu.findItem(R.id.menu_connect).setVisible(true);
             menu.findItem(R.id.menu_reconnect).setVisible(false);
+        } else {
+            menu.findItem(R.id.menu_connect).setVisible(false);
+            menu.findItem(R.id.menu_reconnect).setVisible(true);
 
         }
 

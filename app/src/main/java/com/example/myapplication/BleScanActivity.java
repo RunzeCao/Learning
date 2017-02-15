@@ -98,7 +98,7 @@ public class BleScanActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-        checkPremission();
+        checkPermission();
     }
 
     @Override
@@ -150,7 +150,7 @@ public class BleScanActivity extends AppCompatActivity {
         return true;
     }
 
-    private void checkPremission() {
+    private void checkPermission() {
 
         if (Build.VERSION.SDK_INT >= 23) {
             int check = ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION);

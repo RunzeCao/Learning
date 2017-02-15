@@ -146,8 +146,7 @@ public class BleService extends Service {
         }
 
         // Previously connected device.  Try to reconnect.
-        if (mBluetoothDeviceAddress != null && address.equals(mBluetoothDeviceAddress)
-                && mBluetoothGatt != null) {
+        if (mBluetoothDeviceAddress != null && address.equals(mBluetoothDeviceAddress)&& mBluetoothGatt != null) {
             Log.d(TAG, "Trying to use an existing mBluetoothGatt for connection.");
             if (mBluetoothGatt.connect()) {
                 mConnectionState = STATE_CONNECTING;
@@ -199,7 +198,8 @@ public class BleService extends Service {
 
     /**
      * 向BLE设备写数据
-     */  public boolean writeToBle(byte[] bytes) {
+     */
+    public boolean writeToBle(byte[] bytes) {
         if (mBluetoothGatt == null) {
             Log.e(TAG, "gatt == null");
             return false;
@@ -217,7 +217,8 @@ public class BleService extends Service {
         gattCharacteristic.setValue(bytes);
         return mBluetoothGatt.writeCharacteristic(gattCharacteristic);
     }
-  /*  public boolean writeToBle(BluetoothGatt gatt, byte[] bytes) {
+
+    public boolean writeToBle(BluetoothGatt gatt, byte[] bytes) {
         if (gatt == null) {
             Log.e(TAG, "gatt == null");
             return false;
@@ -234,7 +235,7 @@ public class BleService extends Service {
         }
         gattCharacteristic.setValue(bytes);
         return gatt.writeCharacteristic(gattCharacteristic);
-    }*/
+    }
 
     /**
      * 读BLE设备数据

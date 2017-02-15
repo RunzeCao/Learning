@@ -35,5 +35,6 @@
     <!-- Avatar -->
     <dimen name="avatar_radius">7.0dip</dimen>
     <dimen name="avatar_radius_90">90.0dip</dimen>
+    <dimen name="text_margin">16dp</dimen>
 
 </resources>
