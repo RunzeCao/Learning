@@ -7,43 +7,37 @@ package com.example;
 class Person {
     private String name;
     private String gender;
-    private Boolean isEmpty = Boolean.TRUE;//内存为空
+    private Boolean isEmpty = false;//内存为空
 
     private String getGender() {
         return gender;
     }
 
-    public void setGender(String gender) {
-        this.gender = gender;
-    }
 
     private String getName() {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
 
     void set(String name, String gender) {
         synchronized (this) {
-            while (!isEmpty == Boolean.TRUE) {
+            while (isEmpty) {
                 try {
                     this.wait();
                 } catch (InterruptedException e) {
                     e.printStackTrace();
-                }
+                }  }
                 this.name = name;
                 this.gender = gender;
-                isEmpty = Boolean.FALSE;
+                isEmpty = true;
                 this.notifyAll();
-            }
+
         }
     }
 
     void get(){
         synchronized (this){
-            while (!isEmpty == Boolean.FALSE){
+            while (!isEmpty){
                 try {
                     this.wait();
                 } catch (InterruptedException e) {
@@ -51,7 +45,7 @@ class Person {
                 }
             }
             System.out.println("name "+getName()+",   "+"gender "+getGender());
-            isEmpty = Boolean.TRUE;
+            isEmpty =false;
             this.notifyAll();
         }
     }

@@ -16,9 +16,9 @@ class Producer implements Runnable {
     public void run() {
         for (int i = 0; i < 100; i++) {
             if (i % 2 == 0) {
-                p.set("狒狒", "男");
+                p.set("Bob", "male");
             } else {
-                p.set("闪电", "女");
+                p.set("Mary", "female");
             }
         }
     }
