@@ -42,4 +42,24 @@
         <item name="android:paddingRight">10.0dip</item>
         <item name="android:button">@drawable/bg_radio_btn_selector</item>
     </style>
+
+    <style name="view_anim">
+        <item name="@android:windowEnterAnimation">@anim/fade_in</item>
+        <item name="@android:windowExitAnimation">@anim/fade_out</item>
+    </style>
+
+    <style name="dialog" parent="@android:style/Theme.Dialog">
+        <item name="android:windowFrame">@null</item>
+        <!--边框-->
+        <item name="android:windowIsFloating">true</item>
+        <!--是否浮现在activity之上-->
+        <item name="android:windowIsTranslucent">true</item>
+        <!--无标题-->
+        <item name="android:windowBackground">@android:color/darker_gray</item>
+        <!--背景透明-->
+        <item name="android:backgroundDimEnabled">false</item>
+        <!--模糊-->
+        <item name="android:background">#00ffffff</item>
+        <!-- 设置自定义布局的背景透明 -->
+    </style>
 </resources>
