@@ -21,6 +21,8 @@ class Person {
 
     void set(String name, String gender) {
         synchronized (this) {
+            //while判断标记，解决了线程获取执行权后，是否要运行  判断多次
+
             while (isEmpty) {
                 try {
                     this.wait();
